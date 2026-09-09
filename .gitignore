@@ -1,0 +1,21 @@
+.env
+application/logs/log-*.php
+application/cache/*
+!application/cache/index.html
+!application/cache/.gitkeep
+
+.DS_Store
+/vendor/
+composer.lock
+
+# IDE & System Files
+/nbproject/
+.idea/*
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+/tests/tests/
+/tests/results/
+grep.exe.stackdump

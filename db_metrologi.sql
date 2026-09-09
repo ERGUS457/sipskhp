@@ -1,0 +1,1042 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Sep 09, 2026 at 04:21 AM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `db_metrologi`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alat_spbu`
+--
+
+CREATE TABLE `alat_spbu` (
+  `id_alat` int UNSIGNED NOT NULL,
+  `nomor_pulau` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `kecepatan_alir` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `jumlah_nozzle` int NOT NULL,
+  `daftar_produk_bbm` text COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alat_timbangan`
+--
+
+CREATE TABLE `alat_timbangan` (
+  `id_alat` int UNSIGNED NOT NULL,
+  `kapasitas_nominal` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `kelas_ketelitian` varchar(20) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `alat_timbangan`
+--
+
+INSERT INTO `alat_timbangan` (`id_alat`, `kapasitas_nominal`, `kelas_ketelitian`) VALUES
+(4, '100 kg', 'Sian'),
+(25, '20 Ton ', 'III'),
+(26, '50 Kg', '-');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alat_uttp`
+--
+
+CREATE TABLE `alat_uttp` (
+  `id_alat` int UNSIGNED NOT NULL,
+  `id_pemohon` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `nama_alat` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `merk` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `kapasitas` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jumlah` int NOT NULL DEFAULT '1',
+  `tipe_model` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `nomor_seri` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `buatan` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `detail_spesifik` json DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_read_admin` tinyint(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `alat_uttp`
+--
+
+INSERT INTO `alat_uttp` (`id_alat`, `id_pemohon`, `nama_alat`, `merk`, `kapasitas`, `jumlah`, `tipe_model`, `nomor_seri`, `buatan`, `detail_spesifik`, `created_at`, `is_read_admin`) VALUES
+(4, '4', 'Timbangan', 'Samsung', NULL, 1, 'Keloan', 'Siansl', 'Senyawan', NULL, '2026-05-19 14:28:42', 1),
+(7, '4', 'Timbangan Lantai', 'Mettler Toledo', NULL, 1, 'BBA231', 'MT345678', 'Swiss', NULL, '2026-05-19 14:55:42', 1),
+(9, '6', 'Pompa Ukur BBM', 'Wayne', NULL, 1, 'Dresser', 'WD567890', 'Amerika Serikat', NULL, '2026-05-19 14:17:42', 1),
+(10, '7', 'Timbangan Buah', 'Great Scale', NULL, 1, 'GS-30', 'GS123456', 'China', NULL, '2026-05-19 14:44:42', 1),
+(11, '8', 'Timbangan Gantung', 'Dillon', NULL, 1, 'EDXtreme', 'DL789012', 'Amerika Serikat', NULL, '2026-05-19 13:52:42', 1),
+(12, '9', 'Pompa Ukur BBM', 'Tatsuno', NULL, 1, 'BMP-200', 'TS345678', 'Jepang', NULL, '2026-05-19 14:53:42', 1),
+(13, '10', 'Timbangan Analitik', 'Ohaus', NULL, 1, 'PX224', 'OH901234', 'Amerika Serikat', NULL, '2026-05-19 14:13:42', 1),
+(14, '11', 'Timbangan Hewan', 'Rice Lake', NULL, 1, 'RoughDeck', 'RL567890', 'Amerika Serikat', NULL, '2026-05-19 14:27:42', 1),
+(15, '12', 'Pompa Ukur BBM', 'Gilbarco', NULL, 1, 'Encore 700 S', 'GB123456', 'Amerika Serikat', NULL, '2026-05-19 14:21:42', 1),
+(16, '13', 'Timbangan Lab', 'Sartorius', NULL, 1, 'Entris II', 'ST789012', 'Jerman', NULL, '2026-05-19 14:48:42', 1),
+(17, '14', 'Timbangan Truck', 'Flintec', NULL, 1, 'RC3', 'FL345678', 'Inggris', NULL, '2026-05-19 14:01:42', 1),
+(18, '15', 'Pompa Ukur BBM', 'Tokheim', NULL, 1, 'Quantium 510', 'TQ901234', 'Belanda', NULL, '2026-05-19 13:43:42', 1),
+(19, '16', 'Timbangan Portable', 'A&D', NULL, 1, 'EK-600i', 'AD567890', 'Jepang', NULL, '2026-05-19 14:36:42', 1),
+(20, '17', 'Timbangan Industri', 'Siemens', NULL, 1, 'SIWAREX', 'SM123456', 'Jerman', NULL, '2026-05-19 14:57:42', 1),
+(21, '18', 'Pompa Ukur BBM', 'Wayne', NULL, 1, 'Ovation', 'WY789012', 'Amerika Serikat', NULL, '2026-05-19 13:57:42', 1),
+(23, '20', 'Timbangan Dapur', 'Camry', NULL, 1, 'EK3130', 'CM901234', 'China', NULL, '2026-05-19 14:39:42', 1),
+(24, '21', 'Pompa Ukur BBM', 'Tatsuno', NULL, 1, 'BMP-500', 'TS567890', 'Jepang', NULL, '2026-05-19 14:26:42', 1),
+(25, '28', 'Timbangan', 'Mercy', NULL, 1, '2', '453', 'China', NULL, '2026-05-19 14:38:42', 1),
+(26, '21', 'Timbangan', 'Mercy', NULL, 1, 'Timbangan', '322', 'China', NULL, '2026-05-19 14:33:42', 1),
+(27, '21', 'Pompa Ukur BBM', 'Gasp', NULL, 1, 'Flush', '123', 'Jepang', '{\"jenis_bahan\": \"\", \"nomor_pulau\": \"3\", \"jenis_cairan\": \"\", \"jumlah_nozzle\": \"2\", \"kapasitas_ukur\": \"\", \"kecepatan_alir\": \"40 L/min\", \"kelas_ketelitian\": \"-\", \"daftar_produk_bbm\": \"Pertalite\", \"kapasitas_nominal\": \"\", \"kapasitas_takaran\": \"\"}', '2026-05-19 13:37:42', 1),
+(28, '29', 'Timbangan Jembatan', 'Shay', '20 Ton', 1, 'Ikkn', '23', 'Jepang', NULL, '2026-05-19 14:08:42', 1),
+(29, '52', 'Timbangan Elektronik', 'Sigara S.A', '20 kg', 12, 'ULIS II', 'N.FAB 01.1358/01', 'Prancis', NULL, '2026-05-19 14:33:42', 1),
+(30, '52', 'Timbangan Elektronik', 'Sigara S.A', '30 kg', 4, 'ULIS II', '052034', 'Prancis', NULL, '2026-05-19 15:03:42', 1),
+(31, '52', 'Timbangan Elektronik', 'DAESUNG', '150 kg', 4, 'DSM-300S', '2983', 'Korea', NULL, '2026-05-19 14:42:42', 1),
+(32, '52', 'Timbangan Elektronik', 'CHQ', '150 kg', 1, '-', '-', 'China', NULL, '2026-05-19 14:42:42', 1),
+(33, '30', 'Timbangan Jembatan', '-', '20.000 kg', 1, '-', '-', '-', NULL, '2026-05-19 14:08:42', 1),
+(34, '30', 'Bejana Ukur', '-', '-', 1, '-', '-', '-', NULL, '2026-05-19 14:39:42', 1),
+(35, '30', 'Pompa Ukur BBM', '-', '-', 1, '-', '-', '-', NULL, '2026-05-19 13:53:42', 1),
+(36, '31', 'Timbangan Elektronik', '-', '50 kg - 100 kg', 3, '-', '-', '-', NULL, '2026-05-19 15:12:42', 1),
+(37, '31', 'Timbangan Elektronik', '-', '10 kg - 50 kg', 2, '-', '-', '-', NULL, '2026-05-19 14:06:42', 1),
+(38, '32', 'Pompa Ukur BBM', '-', '-', 9, '-', '-', '-', NULL, '2026-05-19 14:38:42', 1),
+(39, '33', 'Pompa Ukur BBM', '-', '-', 16, '-', '-', '-', NULL, '2026-05-19 13:53:42', 1),
+(40, '34', 'Pompa Ukur BBM', '-', '-', 2, '-', '-', '-', NULL, '2026-05-19 15:16:42', 1),
+(41, '35', 'Pompa Ukur BBM', '-', '-', 2, '-', '-', '-', NULL, '2026-05-19 14:26:42', 1),
+(42, '36', 'Timbangan Meja', '-', '-', 4, '-', '-', '-', NULL, '2026-05-19 14:24:42', 1),
+(43, '37', 'Anak Timbangan', '-', 'M2 & M3', 18, '-', '-', '-', NULL, '2026-05-19 15:04:42', 1),
+(44, '37', 'Anak Timbangan', '-', 'F2 & M1', 5, '-', '-', '-', NULL, '2026-05-19 15:13:42', 1),
+(45, '38', 'Pompa Ukur BBM', '-', '-', 10, '-', '-', '-', NULL, '2026-05-19 13:56:42', 1),
+(46, '39', 'Timbangan Elektronik', '-', '≤ 1000 g', 1, '-', '-', '-', NULL, '2026-05-19 13:45:42', 1),
+(47, '40', 'Timbangan Pegas', '-', '10 kg - 20 kg', 2, '-', '-', '-', NULL, '2026-05-19 15:02:42', 1),
+(48, '41', 'Timbangan Pegas', '-', '≤ 5 kg', 1, '-', '-', '-', NULL, '2026-05-19 13:38:42', 1),
+(49, '41', 'Timbangan Elektronik', '-', '10 kg - 50 kg', 1, '-', '-', '-', NULL, '2026-05-19 14:28:42', 1),
+(50, '42', 'Timbangan Pegas', '-', '10 kg - 20 kg', 1, '-', '-', '-', NULL, '2026-05-19 14:28:42', 1),
+(51, '43', 'Timbangan Elektronik', '-', '50 kg - 100 kg', 1, '-', '-', '-', NULL, '2026-05-19 13:40:42', 1),
+(52, '44', 'Pompa Ukur BBM', '-', '-', 16, '-', '-', '-', NULL, '2026-05-19 14:38:42', 1),
+(53, '45', 'Timbangan Jembatan', '-', '20.000 kg', 1, '-', '-', '-', NULL, '2026-05-19 15:16:42', 1),
+(54, '45', 'Takaran', '-', '≤ 10 kg', 1, '-', '-', '-', NULL, '2026-05-19 13:50:42', 1),
+(55, '45', 'Bejana Ukur', '-', '50 kg - 200 kg', 1, '-', '-', '-', NULL, '2026-05-19 14:43:42', 1),
+(56, '45', 'Pompa Ukur BBM', '-', '-', 1, '-', '-', '-', NULL, '2026-05-19 15:11:42', 1),
+(57, '46', 'Timbangan Elektronik', '-', '≤ 1000 g (Kelas II)', 10, '-', '-', '-', NULL, '2026-05-19 14:49:42', 1),
+(58, '46', 'Timbangan Elektronik', '-', '10 kg - 50 kg', 1, '-', '-', '-', NULL, '2026-05-19 14:55:42', 1),
+(59, '47', 'Pompa Ukur BBM', '-', '-', 14, '-', '-', '-', NULL, '2026-05-19 14:50:42', 1),
+(60, '48', 'Timbangan Elektronik', '-', '50 kg - 100 kg', 2, '-', '-', '-', NULL, '2026-05-19 14:11:42', 1),
+(61, '49', 'Pompa Ukur BBM', '-', '-', 8, '-', '-', '-', NULL, '2026-05-19 14:26:42', 1),
+(62, '50', 'Timbangan Pegas', '-', '10 kg - 20 kg', 1, '-', '-', '-', NULL, '2026-05-19 14:23:42', 1),
+(63, '51', 'Timbangan Pegas', '-', '25 kg - 50 kg', 1, '-', '-', '-', NULL, '2026-05-19 14:58:42', 1),
+(64, '29', 'SPBU Alianyang', 'Toyota', '', 3, 'Pros', '221', 'Indonesia', NULL, '2026-05-19 14:45:42', 1),
+(65, '29', 'Timbangan Jembatan', 'Toyota', '20 Ton', 1, 'Pros', '453', 'Malaysia', NULL, '2026-05-19 08:50:43', 1),
+(66, '29', 'Meteran', 'Mercy', '100 Meter', 1, 'Flush', '243', 'Indonesia', NULL, '2026-05-19 09:04:30', 1),
+(67, '29', 'SPBU Tani', 'Flush', '', 1, 'Flush', '243', 'Korea', NULL, '2026-05-19 19:21:42', 1),
+(68, '29', 'Timbangan Pegas', 'Mercy', '20 Kg', 1, 'Pegas', '2234', 'Jerman', NULL, '2026-05-20 02:39:20', 1),
+(69, '53', 'Timbangan Jembatan', 'Kubota', '20 Ton', 1, 'Portable', '29919', 'Jepang', NULL, '2026-06-08 15:20:35', 1),
+(74, '54', 'Timbangan Jembatan', 'Gasp', '20 Ton', 1, 'Pros', '3231', 'Jepang', NULL, '2026-06-09 06:54:47', 1),
+(75, '29', 'Et temporibus repreh', 'Ut ad ipsum nisi err', '100 Kg', 95, 'Ut placeat non qui ', 'Dolore a laborum Fa', 'Eligendi ea voluptas', NULL, '2026-07-01 08:48:41', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cerapan_tera`
+--
+
+CREATE TABLE `cerapan_tera` (
+  `id_cerapan` int UNSIGNED NOT NULL,
+  `id_surat_tugas` int UNSIGNED NOT NULL,
+  `id_petugas` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `file_cerapan` varchar(255) NOT NULL,
+  `catatan` text,
+  `tgl_upload` datetime DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `cerapan_tera`
+--
+
+INSERT INTO `cerapan_tera` (`id_cerapan`, `id_surat_tugas`, `id_petugas`, `file_cerapan`, `catatan`, `tgl_upload`) VALUES
+(1, 14, '22', 'cerapan_22_14_1777037842.pdf', '', '2026-04-24 20:37:22'),
+(2, 14, '22', 'cerapan_22_14_1777038421.pdf', 'Sah', '2026-04-24 20:47:01'),
+(3, 15, '22', 'cerapan_22_15_1779244929.pdf', '', '2026-05-20 09:42:10'),
+(4, 16, '22', 'cerapan_22_16_1779254755.pdf', 'Cerapan Tera Ulang Timbangan', '2026-05-20 12:25:55'),
+(5, 12, '8', 'cerapan_8_12_1780424426.pdf', '', '2026-06-03 01:20:26'),
+(6, 18, '22', 'cerapan_22_18_1780933779.pdf', '', '2026-06-08 22:49:39'),
+(7, 20, '22', 'cerapan_22_20_1780988603.pdf', '', '2026-06-09 14:03:23'),
+(8, 21, '284743839384384', 'cerapan_284743839384384_21_1782896713.pdf', '', '2026-07-01 16:05:13'),
+(9, 17, '284743839384384', 'cerapan_284743839384384_17_1783396957.xlsx', '', '2026-07-07 11:02:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log_aktivitas`
+--
+
+CREATE TABLE `log_aktivitas` (
+  `id_log` int UNSIGNED NOT NULL,
+  `id_user` int UNSIGNED NOT NULL,
+  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `level` enum('Admin','Kepala UPT','Pemohon','Petugas') COLLATE utf8mb4_general_ci NOT NULL,
+  `aksi` varchar(100) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Login',
+  `keterangan` text COLLATE utf8mb4_general_ci,
+  `ip_address` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_general_ci,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `log_aktivitas`
+--
+
+INSERT INTO `log_aktivitas` (`id_log`, `id_user`, `username`, `level`, `aksi`, `keterangan`, `ip_address`, `user_agent`, `created_at`) VALUES
+(1, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', '2026-05-13 03:47:20'),
+(2, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', '2026-05-13 04:04:54'),
+(3, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', '2026-05-13 04:25:42'),
+(4, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-13 04:34:46'),
+(5, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-13 04:34:56'),
+(6, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-13 04:35:10'),
+(7, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-13 04:36:33'),
+(8, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-13 04:39:49'),
+(9, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-13 04:40:00'),
+(10, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-13 04:50:23'),
+(11, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-13 04:50:26'),
+(12, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-17 10:17:53'),
+(13, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-17 11:17:50'),
+(14, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-17 11:17:59'),
+(15, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-17 11:42:05'),
+(16, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-17 11:42:46'),
+(17, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 13:04:13'),
+(18, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 13:04:21'),
+(19, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 13:04:28'),
+(20, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 13:04:33'),
+(21, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 13:05:59'),
+(22, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 13:06:06'),
+(23, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 14:34:56'),
+(24, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 15:50:00'),
+(25, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 15:50:04'),
+(26, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 15:50:07'),
+(27, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 15:50:12'),
+(28, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 15:50:46'),
+(29, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 15:50:50'),
+(30, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 16:03:26'),
+(31, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 16:03:36'),
+(32, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 16:04:36'),
+(33, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-19 16:04:39'),
+(34, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:19:56'),
+(35, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:21:46'),
+(36, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:21:50'),
+(37, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:38:42'),
+(38, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:38:48'),
+(39, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:39:24'),
+(40, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:39:29'),
+(41, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:41:17'),
+(42, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:41:21'),
+(43, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:42:32'),
+(44, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:42:35'),
+(45, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:42:51'),
+(46, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:42:57'),
+(47, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:43:31'),
+(48, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:43:34'),
+(49, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:43:58'),
+(50, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 02:44:03'),
+(51, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:14:10'),
+(52, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:21:08'),
+(53, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:21:14'),
+(54, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:21:29'),
+(55, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:21:32'),
+(56, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:21:48'),
+(57, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:23:07'),
+(58, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:24:24'),
+(59, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:24:29'),
+(60, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:26:09'),
+(61, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:26:14'),
+(62, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:26:49'),
+(63, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:26:55'),
+(64, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:27:37'),
+(65, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-05-20 05:27:42'),
+(66, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 10:28:08'),
+(67, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 14:22:04'),
+(68, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 14:22:12'),
+(69, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 14:22:14'),
+(70, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 14:23:29'),
+(71, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 15:48:27'),
+(72, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 16:04:44'),
+(73, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 16:04:48'),
+(74, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 16:04:56'),
+(75, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 16:04:59'),
+(76, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 16:06:02'),
+(77, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 16:06:06'),
+(78, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 16:18:35'),
+(79, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 16:18:43'),
+(80, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 16:31:35'),
+(81, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 16:31:39'),
+(82, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:03:12'),
+(83, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:03:16'),
+(84, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:07:36'),
+(85, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:07:40'),
+(86, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:08:16'),
+(87, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:09:25'),
+(88, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:09:30'),
+(89, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:09:58'),
+(90, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:13:59'),
+(91, 1, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:14:03'),
+(92, 1, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:16:58'),
+(93, 1, 'edi123', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:17:05'),
+(94, 1, 'edi123', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:17:14'),
+(95, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:17:54'),
+(96, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:17:58'),
+(97, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:18:02'),
+(98, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:18:05'),
+(99, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:18:22'),
+(100, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:18:25'),
+(101, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:18:47'),
+(102, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:18:50'),
+(103, 1, 'edi123', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:18:57'),
+(104, 1, 'edi123', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:19:37'),
+(105, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:19:41'),
+(106, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:19:54'),
+(107, 1, 'edi123', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:20:00'),
+(108, 1, 'edi123', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:20:32'),
+(109, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:20:36'),
+(110, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:20:49'),
+(111, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:20:53'),
+(112, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:21:09'),
+(113, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:21:12'),
+(114, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:22:53'),
+(115, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:23:38'),
+(116, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:25:27'),
+(117, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:25:31'),
+(118, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:41:22'),
+(119, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:41:28'),
+(120, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:48:59'),
+(121, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:49:03'),
+(122, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:50:26'),
+(123, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:50:31'),
+(124, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:50:37'),
+(125, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:50:44'),
+(126, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:51:00'),
+(127, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:51:03'),
+(128, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:51:25'),
+(129, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:51:30'),
+(130, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:51:48'),
+(131, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:52:09'),
+(132, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:52:41'),
+(133, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:52:47'),
+(134, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:52:51'),
+(135, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 18:52:54'),
+(136, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 19:08:13'),
+(137, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 19:08:19'),
+(138, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 19:16:13'),
+(139, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 19:16:16'),
+(140, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 19:24:24'),
+(141, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', '2026-06-02 19:24:28'),
+(142, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-07 15:09:08'),
+(143, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-07 15:38:46'),
+(144, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-07 15:38:51'),
+(145, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-07 15:40:04'),
+(146, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-07 15:40:07'),
+(147, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-07 15:40:19'),
+(148, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-07 15:40:25'),
+(149, 59, 'pahrul', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:16:33'),
+(150, 59, 'pahrul', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:34:12'),
+(151, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:34:16'),
+(152, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:44:46'),
+(153, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:44:49'),
+(154, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:45:44'),
+(155, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:45:47'),
+(156, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:49:11'),
+(157, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:49:23'),
+(158, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:49:43'),
+(159, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:49:47'),
+(160, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:50:55'),
+(161, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:51:02'),
+(162, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:51:13'),
+(163, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:51:19'),
+(164, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:52:00'),
+(165, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:52:03'),
+(166, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:53:30'),
+(167, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:53:38'),
+(168, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:53:43'),
+(169, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 15:54:19'),
+(170, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 16:00:20'),
+(171, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 16:01:22'),
+(172, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 16:01:29'),
+(173, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 16:01:34'),
+(174, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 16:01:40'),
+(175, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 16:01:44'),
+(176, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 16:01:47'),
+(177, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 16:02:55'),
+(178, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 16:02:58'),
+(179, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-08 16:03:02'),
+(180, 60, 'Sisko', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 06:53:40'),
+(181, 60, 'Sisko', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 06:54:52'),
+(182, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 06:54:56'),
+(183, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 06:55:58'),
+(184, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 06:56:03'),
+(185, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 06:56:21'),
+(186, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:03:33'),
+(187, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:03:37'),
+(188, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:04:39'),
+(189, 60, 'Sisko', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:04:52'),
+(190, 60, 'Sisko', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:05:45'),
+(191, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:05:50'),
+(192, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:11:28'),
+(193, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:11:34'),
+(194, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:12:07'),
+(195, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:12:11'),
+(196, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:14:44'),
+(197, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:14:49'),
+(198, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:17:55'),
+(199, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:17:59'),
+(200, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:23:23'),
+(201, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:24:56'),
+(202, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:26:07'),
+(203, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:26:44'),
+(204, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:28:13'),
+(205, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:28:18'),
+(206, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:30:00'),
+(207, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:30:09'),
+(208, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:30:35'),
+(209, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:32:45'),
+(210, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:41:29'),
+(211, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:41:42'),
+(212, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:52:35'),
+(213, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 07:52:38'),
+(214, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-09 08:00:49'),
+(215, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-15 14:16:05'),
+(216, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-15 15:52:18'),
+(217, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-20 15:17:02'),
+(218, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-20 15:28:44'),
+(219, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-20 16:09:44'),
+(220, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-21 13:03:54'),
+(221, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-21 13:04:11'),
+(222, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-21 13:04:19');
+INSERT INTO `log_aktivitas` (`id_log`, `id_user`, `username`, `level`, `aksi`, `keterangan`, `ip_address`, `user_agent`, `created_at`) VALUES
+(223, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-06-21 13:10:36'),
+(224, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:36:07'),
+(225, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:42:43'),
+(226, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:42:47'),
+(227, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:47:41'),
+(228, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:47:46'),
+(229, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:47:59'),
+(230, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:48:03'),
+(231, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:48:14'),
+(232, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:48:17'),
+(233, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:48:45'),
+(234, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:48:48'),
+(235, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:49:16'),
+(236, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:49:18'),
+(237, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:49:24'),
+(238, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:49:27'),
+(239, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:49:30'),
+(240, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:49:33'),
+(241, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:50:09'),
+(242, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:50:11'),
+(243, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:50:26'),
+(244, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 08:50:29'),
+(245, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 09:05:17'),
+(246, 25, 'rudiindratno', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 09:05:20'),
+(247, 25, 'rudiindratno', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 09:20:52'),
+(248, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 09:20:59'),
+(249, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 09:31:29'),
+(250, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 09:32:20'),
+(251, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 09:32:27'),
+(252, 60, 'Sisko', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 09:32:29'),
+(253, 60, 'Sisko', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 09:32:35'),
+(254, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 09:32:37'),
+(255, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', '2026-07-01 09:33:49'),
+(256, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-05 14:45:25'),
+(257, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-05 14:48:20'),
+(258, 59, 'pahrul', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-07 03:33:40'),
+(259, 59, 'pahrul', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-07 03:33:47'),
+(260, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-07 03:33:50'),
+(261, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-07 04:01:49'),
+(262, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-07 04:01:53'),
+(263, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-07 04:02:14'),
+(264, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-07 04:02:18'),
+(265, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-07 04:02:40'),
+(266, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-07 04:02:43'),
+(267, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-15 13:53:10'),
+(268, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-15 13:53:10'),
+(269, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-15 14:03:48'),
+(270, 57, 'Kepala_UPT', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-15 14:03:54'),
+(271, 57, 'Kepala_UPT', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-15 14:12:28'),
+(272, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-15 14:13:58'),
+(273, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-24 18:59:54'),
+(274, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-26 13:20:15'),
+(275, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-26 13:22:06'),
+(276, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-26 13:22:20'),
+(277, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-26 13:23:44'),
+(278, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-27 04:01:16'),
+(279, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-27 04:01:21'),
+(280, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-27 04:01:25'),
+(281, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-27 04:01:54'),
+(282, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-27 04:01:58'),
+(283, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-27 04:13:30'),
+(284, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-27 12:03:46'),
+(285, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-27 12:03:49'),
+(286, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-27 12:03:52'),
+(287, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-27 12:03:59'),
+(288, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36', '2026-07-27 12:04:02'),
+(289, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 03:35:20'),
+(290, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 12:55:04'),
+(291, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:03:08'),
+(292, 63, 'petugas', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:03:38'),
+(293, 32, 'ergusp', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:03:45'),
+(294, 32, 'ergusp', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:03:48'),
+(295, 63, 'petugas', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:03:54'),
+(296, 63, 'petugas', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:09:19'),
+(297, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:09:22'),
+(298, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:11:54'),
+(299, 65, 'petugas', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:14:02'),
+(300, 65, 'petugas', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:14:18'),
+(301, 64, 'kepalaupt', 'Kepala UPT', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:14:22'),
+(302, 64, 'kepalaupt', 'Kepala UPT', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:14:28'),
+(303, 61, 'admin', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:14:37'),
+(304, 61, 'admin', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:14:42'),
+(305, 62, 'pemohon', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:14:52'),
+(306, 62, 'pemohon', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:15:00'),
+(307, 65, 'petugas', 'Petugas', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:32:27'),
+(308, 65, 'petugas', 'Petugas', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:32:29'),
+(309, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:32:33'),
+(310, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-06 13:32:37'),
+(311, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-24 09:58:43'),
+(312, 8, 'admin1', 'Admin', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-24 10:58:19'),
+(313, 33, 'ergusm', 'Pemohon', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-24 10:58:22'),
+(314, 33, 'ergusm', 'Pemohon', 'Logout', 'Keluar dari sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-24 11:07:47'),
+(315, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36', '2026-08-24 11:08:05'),
+(316, 8, 'admin1', 'Admin', 'Login', 'Login berhasil ke sistem SIAP SKHP TERA', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', '2026-09-09 04:14:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` bigint UNSIGNED NOT NULL,
+  `version` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `class` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `group` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `namespace` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `time` int NOT NULL,
+  `batch` int UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`, `batch`) VALUES
+(1, '2026-01-31-144047', 'App\\Database\\Migrations\\TeraDb', 'default', 'App', 1771051733, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pemohon`
+--
+
+CREATE TABLE `pemohon` (
+  `id_pemohon` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_user` int UNSIGNED NOT NULL,
+  `nama_pemilik` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `alamat_usaha` text COLLATE utf8mb4_general_ci NOT NULL,
+  `jenis_usaha` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `kontak_pemohon` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pemohon`
+--
+
+INSERT INTO `pemohon` (`id_pemohon`, `id_user`, `nama_pemilik`, `alamat_usaha`, `jenis_usaha`, `kontak_pemohon`) VALUES
+('10', 14, 'CV Karya Mandiri', 'Jl. Pemuda No. 12, Semarang', 'Timbangan', '085678901234'),
+('11', 15, 'UD Lancar Jaya', 'Jl. Diponegoro No. 34, Yogyakarta', 'LPG', '086789012345'),
+('12', 16, 'PT Sinar Mas', 'Jl. Sudirman No. 56, Medan', 'SPBU', '087890123456'),
+('13', 17, 'CV Citra Abadi', 'Jl. Thamrin No. 78, Makassar', 'Timbangan', '088901234567'),
+('14', 18, 'UD Makmur Sejahtera', 'Jl. Gatot Subroto No. 90, Palembang', 'LPG', '089012345678'),
+('15', 19, 'PT Nusantara Sakti', 'Jl. Ahmad Yani No. 11, Denpasar', 'SPBU', '081123456789'),
+('16', 20, 'CV Sukses Selalu', 'Jl. Pemuda No. 22, Malang', 'Timbangan', '082234567890'),
+('17', 21, 'UD Abadi Jaya', 'Jl. Diponegoro No. 33, Surakarta', 'LPG', '083345678901'),
+('18', 22, 'PT Mega Karya', 'Jl. Sudirman No. 44, Balikpapan', 'SPBU', '084456789012'),
+('20', 24, 'UD Jaya Abadi', 'Jl. Gatot Subroto No. 66, Pontianak', 'LPG', '086678901234'),
+('21', 3, 'Ergus Second Branch', 'Jl. Pahlawan No. 99, Sambas', 'SPBU', '083140063146'),
+('22', 6, 'Aal Gas Station', 'Jl. Sejangkung No. 100, Sambas', 'SPBU', '089517775444'),
+('24', 10, 'PT Energi Nusantara', 'Jl. Asia Afrika No. 77, Bandung', 'SPBU', '081987654321'),
+('25', 11, 'CV Timbang Akurat', 'Jl. Merdeka No. 88, Jakarta', 'Timbangan', '082876543210'),
+('28', 30, 'Poltesa', 'Sambas', 'SPBU', '083140063143'),
+('29', 33, 'Ergus', 'Rt 10 Rw 05 Dusun Sembua\' Segantong Desa Tanjung Keracut Kecamatan Teluk Keramat', 'PT Sawit', '083140063145'),
+('30', 34, 'PT. Hotmixpro Anugraha Warna', 'Jl. Raya Pasir Panjang, Sedau, Skw Selatan, Singkawang', 'Timbangan', NULL),
+('31', 35, 'PT. Palapa Semangat Terbarukan', 'Jl. P. Diponegoro, Pasiran, Skw Barat, Singkawang', 'Timbangan', '085101178888'),
+('32', 36, 'PT. Niaga Jaya Utara (SPBU 63.791.01)', 'Bagak Sahwa, Skw Timur, Singkawang', 'SPBU', NULL),
+('33', 37, 'PT. Sinar Samudra Sukses (SPBU 64.791.022)', 'Jl. GM Situt, Pasiran, Skw Barat, Singkawang', 'SPBU', NULL),
+('34', 38, 'AKR Setapuk', 'Setapuk, Setapuk Besar, Skw Utara, Singkawang', 'SPBU', NULL),
+('35', 39, 'AKR Passy', 'Pangmilang, Pangmilang, Skw Selatan, Singkawang', 'SPBU', NULL),
+('36', 40, 'Aphong', 'Jl. Bawal No.16, Condong, Skw Tengah, Singkawang', 'Timbangan', NULL),
+('37', 41, 'Apotik Selakau', 'Jl. Raya Selakau, Luar Skw', 'Apotek', '085228494779'),
+('38', 42, 'PT. Ratu Sepudak Jaya (64.791.15)', 'Ratu Sepudak, Sei Wie, Skw Tengah, Singkawang', 'SPBU', NULL),
+('39', 43, 'Sinar Mas', 'Jl. Kurau No. 167, Condong, Skw Tengah, Singkawang', 'Timbangan', NULL),
+('4', 6, 'Aal', 'Jalan Sejangkung, SENYAWAN, RT 003, RW 002', 'Lpg', '089517775443'),
+('40', 44, 'TK UB', 'Jl. GM Situt, Pasiran, Skw Barat, Singkawang', 'Timbangan', NULL),
+('41', 45, 'Kadin', 'Jl. Pramuka, Condong, Skw Tengah, Singkawang', 'Timbangan', NULL),
+('42', 46, 'Garuda', 'Jl. Tani No.108, Kuala, Skw Barat, Singkawang', 'Timbangan', NULL),
+('43', 47, 'Leo Laundry', 'Jl. Bambang Ismoyo, Sei. Wie, Skw Tengah, Singkawang', 'Timbangan', NULL),
+('44', 48, 'PT. Cipta Serasi Konsolindo', 'Pasir Panjang, Sedau, Skw Selatan, Singkawang', 'SPBU', NULL),
+('45', 49, 'PT. Duta Asa Jaya', 'Jl. Raya Pasir Panjang, Sedau, Skw Selatan, Singkawang', 'Timbangan', NULL),
+('46', 50, 'Hypermart Singkawang', 'Jl. Alianyang No.133, Pasiran, Skw Barat, Singkawang', 'Timbangan', NULL),
+('47', 51, 'PT. Pasiran Jaya Mandiri', 'Jl. A.Yani No. 005, Pasiran, Skw Barat, Singkawang', 'SPBU', NULL),
+('48', 52, 'PT. Sinka Sinye Agrotama', 'Sijangkung, Skw Timur, Singkawang', 'Timbangan', NULL),
+('49', 53, 'PT. Gunung Jaya (64.791.19)', 'Setapuk Kecil, Setapuk Kecil, Skw Utara, Singkawang', 'SPBU', NULL),
+('50', 54, 'Ardiansyah', 'Jl. RA Kartini, Sekip Lama, Skw Tengah, Singkawang', 'Timbangan', NULL),
+('51', 55, 'Hadiyah', 'Jl. Alianyang, Pasiran, Skw Barat, Singkawang', 'Timbangan', NULL),
+('52', 56, 'Susi Susanti / PT. Mitra Abadi Permai', 'Jl. Raya Lirang, Singkawang', 'Timbangan', NULL),
+('53', 59, 'Pahrul', 'Tebas', 'PT Kelapa', '08123481828'),
+('54', 60, 'PT Surya', 'Jalan Nagur', 'PT Material', '0837272722'),
+('6', 10, 'PT Maju Jaya Abadi', 'Jl. Sudirman No. 123, Jakarta Pusat', 'SPBU', '081234567890'),
+('7', 11, 'CV Berkah Sejahtera', 'Jl. Thamrin No. 45, Jakarta Selatan', 'Timbangan', '082345678901'),
+('8', 12, 'UD Sumber Rejeki', 'Jl. Gatot Subroto No. 67, Bandung', 'LPG', '083456789012'),
+('9', 13, 'PT Delta Nusantara', 'Jl. Ahmad Yani No. 89, Surabaya', 'SPBU', '084567890123');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pengujian`
+--
+
+CREATE TABLE `pengujian` (
+  `id_pengujian` int UNSIGNED NOT NULL,
+  `id_alat` int UNSIGNED NOT NULL,
+  `tgl_pengujian` date NOT NULL,
+  `metode_uji` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `standar_uji` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `suhu_dasar` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `hasil_uji` enum('Sah','Batal') COLLATE utf8mb4_general_ci NOT NULL,
+  `status_validasi` enum('Menunggu','Tervalidasi') COLLATE utf8mb4_general_ci DEFAULT 'Menunggu'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pengujian`
+--
+
+INSERT INTO `pengujian` (`id_pengujian`, `id_alat`, `tgl_pengujian`, `metode_uji`, `standar_uji`, `suhu_dasar`, `hasil_uji`, `status_validasi`) VALUES
+(2, 25, '2026-03-09', 'Standar', 'Batu Standar', '30', 'Sah', 'Tervalidasi'),
+(3, 23, '2026-03-10', 'Standar', 'AT.010', '30', 'Batal', 'Tervalidasi'),
+(4, 15, '2026-03-10', 'Standar', 'Batu Standar', '39', 'Batal', 'Tervalidasi'),
+(6, 27, '2026-04-07', 'Tera / Tera Ulang', 'Permendag No. 24 Tahun 2024', '20 °C', 'Sah', 'Tervalidasi'),
+(7, 28, '2026-04-24', 'Tera Ulang', 'Permendag No. 24 Tahun 2024', '', 'Sah', 'Tervalidasi'),
+(8, 68, '2026-05-20', 'Tera Ulang', 'Permendag No. 24 Tahun 2024', '', 'Sah', 'Tervalidasi'),
+(9, 10, '2026-05-20', 'Tera Ulang', 'Permendag No. 24 Tahun 2024', '', 'Sah', 'Tervalidasi'),
+(10, 9, '2026-04-13', 'Tera / Tera Ulang', 'Permendag No. 24 Tahun 2024', '', 'Sah', 'Tervalidasi'),
+(12, 74, '2026-06-09', 'Tera / Tera Ulang', 'Permendag No. 24 Tahun 2024', '20 °C', 'Sah', 'Tervalidasi');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `petugas`
+--
+
+CREATE TABLE `petugas` (
+  `id_petugas` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_user` int UNSIGNED DEFAULT NULL,
+  `nama_petugas` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `nip` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `pangkat` varchar(60) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jabatan` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `petugas`
+--
+
+INSERT INTO `petugas` (`id_petugas`, `id_user`, `nama_petugas`, `nip`, `pangkat`, `jabatan`, `foto`) VALUES
+('123456789', NULL, 'Admin Metrologi', '123456789', NULL, 'Kepala UPT', NULL),
+('196810161998031004', 9, 'Yasmalizar, S.H.', '196810161998031004', 'Pembina Utama Muda (IV/c)', 'Kepala Dinas', NULL),
+('196907021991031005', 25, 'Rudi Indratno', '196907021991031005', 'Penata / (III/c)', 'Penera Penyelia', NULL),
+('197404302008031001', 4, 'Wiryamor, S.T.', '197404302008031001', 'Penata Tk.I / (III/d)', 'Pengelola Metrologi dan Perlindungan Konsumen', NULL),
+('198210112025211019', 26, 'Darmaji', '198210112025211019', 'V', 'Pengadministrasi Perkantoran', NULL),
+('198303102011011006', 1, 'Edy Chahyono, S.T.', '198303102011011006', 'Penata Tk.I / (III/d)', 'Pengawas Perdagangan Ahli Muda', NULL),
+('198308302009031003', 4, 'Eri Kurniawan, S.Sos', '198308302009031003', 'Penata Tk.I / (III/d)', 'Kepala UPT Metrologi Legal', NULL),
+('198405052011011005', 8, 'Dedi Pratama, S.T.', '198405052011011005', 'Pembina / (IV/a)', 'Penera Ahli Madya', NULL),
+('198605102009011009', 9, 'Hadi Sucipto', '198605102009011009', 'Pengatur Tk.I / (II/d)', 'Penera Terampil', NULL),
+('198607032025211150', 27, 'Leo Andrian, A.Md.Kep', '198607032025211150', '-', 'Pengelola Layanan Operasional', NULL),
+('198702202015021003', 25, 'Budi Santoso, S.T.', '198702202015021003', 'Penata Muda Tk.I / (III/b)', 'Penera Ahli Pertama', NULL),
+('198705152013011011', 26, 'Joko Susilo, S.T.', '198705152013011011', 'Penata / (III/c)', 'Penera Ahli Muda', NULL),
+('198805202012011007', 1, 'Fajar Nugroho, S.T.', '198805202012011007', 'Penata / (III/c)', 'Penera Ahli Muda', NULL),
+('198905102014011013', 31, 'Lukman Hakim', '198905102014011013', 'Pengatur / (II/c)', 'Penera Terampil', NULL),
+('199003052016032012', 8, 'Kartika Dewi, S.Si.', '199003052016032012', 'Penata Muda Tk.I / (III/b)', 'Penera Ahli Muda', NULL),
+('199003102018032004', 26, 'Citra Lestari, S.Si.', '199003102018032004', 'Penata Muda / (III/a)', 'Penera Ahli Muda', NULL),
+('199103252017032008', 4, 'Gita Permata', '199103252017032008', 'Penata Muda Tk.I / (III/b)', 'Penera Ahli Muda', NULL),
+('199205152019042006', 27, 'Eka Wulandari', '199205152019042006', 'Penata Muda / (III/a)', 'Penera Ahli Pertama', NULL),
+('199302082023211013', 9, 'Bayu Yudhatama, S.T.', '199302082023211013', 'Penata Muda / IX', 'Penera Ahli Pertama', NULL),
+('199305302020042010', 25, 'Indah Kusuma, A.Md.', '199305302020042010', 'Penata Muda / (III/a)', 'Penera Ahli Pertama', NULL),
+('199909022025211060', 8, 'Purnando', '199909022025211060', 'V', 'Operator Layanan Operasional', NULL),
+('2202002', 57, 'Kepala UPT', '2202002', 'Kepala UPT', 'Kepala UPT Metrologi', NULL),
+('22222222424232233232', 65, 'petugas', '22222222424232233232', 'Petugas', 'Petugas', NULL),
+('284743839384384', 32, 'Ergus Petugas', '284743839384384', 'Penata Tk.I / (III/d)', 'Operator', 'petugas_22.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `skhp`
+--
+
+CREATE TABLE `skhp` (
+  `id_skhp` int UNSIGNED NOT NULL,
+  `id_pengujian` int UNSIGNED NOT NULL,
+  `id_petugas` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `no_surat` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `nama_kepala_dinas` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `masa_berlaku` date NOT NULL,
+  `tgl_terbit` date NOT NULL,
+  `no_daftar` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `nip_pejabat` varchar(20) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `skhp`
+--
+
+INSERT INTO `skhp` (`id_skhp`, `id_pengujian`, `id_petugas`, `no_surat`, `nama_kepala_dinas`, `masa_berlaku`, `tgl_terbit`, `no_daftar`, `nip_pejabat`) VALUES
+(11, 2, '123456789', 'B / 500.2.3.15 / 0002 / UPTD-08 / 2026', 'YASMALIZAR, S.H.', '2027-03-09', '2026-03-09', '0002 / 03 / 2026', '196810161998031004'),
+(12, 7, '123456789', 'B / 500.2.3.15 / 0007 / UPTD-08 / 2026', 'YASMALIZAR, S.H.', '2027-04-24', '2026-04-24', '0007 / 04 / 2026', '196810161998031004'),
+(13, 3, '123456789', 'B / 500.2.3.15 / 0003 / UPTD-08 / 2026', 'YASMALIZAR, S.H.', '2027-03-10', '2026-03-10', '0003 / 03 / 2026', '196810161998031004'),
+(14, 4, '123456789', 'B / 500.2.3.15 / 0004 / UPTD-08 / 2026', 'YASMALIZAR, S.H.', '2027-03-10', '2026-03-10', '0004 / 03 / 2026', '196810161998031004'),
+(15, 8, '123456789', 'B / 500.2.3.15 / 0008 / UPTD-08 / 2026', 'YASMALIZAR, S.H.', '2027-05-20', '2026-05-20', '0008 / 05 / 2026', '196810161998031004'),
+(16, 9, '123456789', 'B / 500.2.3.15 / 0009 / UPTD-08 / 2026', 'YASMALIZAR, S.H.', '2027-05-20', '2026-05-20', '0009 / 05 / 2026', '196810161998031004'),
+(17, 10, '123456789', 'B / 500.2.3.15 / 0010 / UPTD-08 / 2026', 'YASMALIZAR, S.H.', '2027-04-13', '2026-04-13', '0010 / 04 / 2026', '196810161998031004'),
+(19, 12, '123456789', 'B / 500.2.3.15 / 0012 / UPTD-08 / 2026', 'YASMALIZAR, S.H.', '2027-06-09', '2026-06-09', '0012 / 06 / 2026', '196810161998031004');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `surat_tugas`
+--
+
+CREATE TABLE `surat_tugas` (
+  `id_surat_tugas` int UNSIGNED NOT NULL,
+  `id_alat` int UNSIGNED NOT NULL,
+  `id_petugas` varchar(255) NOT NULL,
+  `no_surat_tugas` varchar(100) NOT NULL,
+  `tgl_tugas` date NOT NULL,
+  `status` enum('Menunggu','Selesai') DEFAULT 'Menunggu'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `surat_tugas`
+--
+
+INSERT INTO `surat_tugas` (`id_surat_tugas`, `id_alat`, `id_petugas`, `no_surat_tugas`, `tgl_tugas`, `status`) VALUES
+(1, 25, '[\"199305302020042010\"]', 'ST-20260309-798', '2026-03-09', 'Selesai'),
+(2, 24, '[\"197404302008031001\",\"196907021991031005\",\"198210112025211019\",\"199305302020042010\"]', 'ST-20260309-482', '2026-03-09', 'Menunggu'),
+(3, 23, '[\"198905102014011013\"]', 'ST-20260309-555', '2026-03-09', 'Selesai'),
+(5, 15, '[\"198905102014011013\"]', 'ST-20260310-384', '2026-03-10', 'Selesai'),
+(6, 26, '[\"199302082023211013\",\"199909022025211060\"]', 'ST-20260407-901', '2026-04-07', 'Menunggu'),
+(7, 27, '[\"198905102014011013\"]', 'ST-20260407-978', '2026-04-07', 'Selesai'),
+(8, 21, '[\"199302082023211013\"]', 'ST-20260410-176', '2026-04-10', 'Menunggu'),
+(9, 20, '[\"198905102014011013\"]', 'ST-20260410-593', '2026-04-10', 'Menunggu'),
+(10, 19, '[\"198210112025211019\",\"198607032025211150\",\"198905102014011013\"]', 'ST-20260410-142', '2026-04-10', 'Menunggu'),
+(11, 4, '[\"199305302020042010\",\"198905102014011013\"]', 'ST-20260413-681', '2026-04-13', 'Menunggu'),
+(12, 9, '[\"197404302008031001\",\"199302082023211013\",\"196907021991031005\",\"198210112025211019\",\"199909022025211060\",\"198607032025211150\",\"198303102011011006\",\"196810161998031004\"]', 'ST-20260413-806', '2026-04-13', 'Selesai'),
+(13, 7, '[\"197404302008031001\",\"199302082023211013\",\"196907021991031005\"]', 'ST-20260415-595', '2026-04-15', 'Menunggu'),
+(14, 28, '[\"284743839384384\"]', 'ST-20260424-815', '2026-04-24', 'Selesai'),
+(15, 68, '[\"284743839384384\"]', 'ST-20260520-471', '2026-05-20', 'Selesai'),
+(16, 10, '[\"284743839384384\"]', 'ST-20260520-337', '2026-05-20', 'Selesai'),
+(17, 12, '[\"284743839384384\"]', 'ST-20260602-886', '2026-06-02', 'Selesai'),
+(20, 74, '[\"284743839384384\"]', 'ST-20260609-908', '2026-06-09', 'Selesai'),
+(21, 75, '[\"284743839384384\"]', 'ST-20260701-333', '2026-07-01', 'Selesai');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id_user` int UNSIGNED NOT NULL,
+  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `level` enum('Admin','Kepala UPT','Pemohon','Petugas') COLLATE utf8mb4_general_ci NOT NULL,
+  `email_verified` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Status verifikasi email: 0=belum, 1=sudah',
+  `verification_token` varchar(64) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Token verifikasi email satu kali pakai',
+  `foto_profil` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id_user`, `username`, `password`, `email`, `level`, `email_verified`, `verification_token`, `foto_profil`) VALUES
+(1, 'edi123', '$2y$10$T1AUGW/jhL3KxZKrzyBXjOuumcd4o5Bb0ohpFA3HYTy4t5O7rxok2', 'edi123@petugas.local', 'Petugas', 1, NULL, NULL),
+(3, 'ergus1', '$2y$10$1zxQQFcbqAnRMzuPdVMFCeV7tktCdC21k7tFzw4S38yfyNJhH8CRe', 'ergus87@gmail.com', 'Pemohon', 1, NULL, NULL),
+(4, 'wiryamor', '$2y$10$FIprDwYjY.OStVObCE0rVeqZohFdQ4DQzIRXpC9Fnd1un3awVNacy', 'wiryamor@petugas.local', 'Petugas', 1, NULL, NULL),
+(5, 'ergus2', '$2y$10$mS7YSjUiYCXiNQf/P8FvmOzufUUmozEX/RXvIw/Md90uwciQw2hV2', 'ergusegsy@gmail.com', 'Pemohon', 1, NULL, NULL),
+(6, 'aal', '$2y$10$4k8G4C/cQiS2rvL2z5Ix7.yhCufWJWu99dYdM7e2D4r0Qoc7npdnu', 'alandaranda763@gmail.com', 'Pemohon', 1, NULL, NULL),
+(8, 'admin1', '$2y$10$t2a0vX6RrDiCr1yJtWoO1unr16ajO3ITBdAqpBrBOtp6d5u3dVngu', 'admin2@gmail.com', 'Admin', 1, NULL, NULL),
+(9, 'kepala2', '$2y$10$JE/vccJYrA6ZX/ts8UivwuUvbJL.jykyDzmgaap1J4zgXkEGNaj/G', 'kepala2@gmail.com', 'Kepala UPT', 1, NULL, NULL),
+(10, 'pemohon1', '$2y$10$1zxQQFcbqAnRMzuPdVMFCeV7tktCdC21k7tFzw4S38yfyNJhH8CRe', 'pemohon1@gmail.com', 'Pemohon', 1, NULL, NULL),
+(11, 'pemohon2', '$2y$10$mS7YSjUiYCXiNQf/P8FvmOzufUUmozEX/RXvIw/Md90uwciQw2hV2', 'pemohon2@gmail.com', 'Pemohon', 1, NULL, NULL),
+(12, 'pemohon3', '$2y$10$4k8G4C/cQiS2rvL2z5Ix7.yhCufWJWu99dYdM7e2D4r0Qoc7npdnu', 'pemohon3@gmail.com', 'Pemohon', 1, NULL, NULL),
+(13, 'pemohon4', '$2y$10$ONviKp2okltDzygpQkU3.eIPFXkKhgv1hGOHzAwtwd5CLg2gdjAcC', 'pemohon4@gmail.com', 'Pemohon', 1, NULL, NULL),
+(14, 'pemohon5', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'pemohon5@gmail.com', 'Pemohon', 1, NULL, NULL),
+(15, 'pemohon6', '$2y$10$1zxQQFcbqAnRMzuPdVMFCeV7tktCdC21k7tFzw4S38yfyNJhH8CRe', 'pemohon6@gmail.com', 'Pemohon', 1, NULL, NULL),
+(16, 'pemohon7', '$2y$10$mS7YSjUiYCXiNQf/P8FvmOzufUUmozEX/RXvIw/Md90uwciQw2hV2', 'pemohon7@gmail.com', 'Pemohon', 1, NULL, NULL),
+(17, 'pemohon8', '$2y$10$4k8G4C/cQiS2rvL2z5Ix7.yhCufWJWu99dYdM7e2D4r0Qoc7npdnu', 'pemohon8@gmail.com', 'Pemohon', 1, NULL, NULL),
+(18, 'pemohon9', '$2y$10$ONviKp2okltDzygpQkU3.eIPFXkKhgv1hGOHzAwtwd5CLg2gdjAcC', 'pemohon9@gmail.com', 'Pemohon', 1, NULL, NULL),
+(19, 'pemohon10', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'pemohon10@gmail.com', 'Pemohon', 1, NULL, NULL),
+(20, 'pemohon11', '$2y$10$1zxQQFcbqAnRMzuPdVMFCeV7tktCdC21k7tFzw4S38yfyNJhH8CRe', 'pemohon11@gmail.com', 'Pemohon', 1, NULL, NULL),
+(21, 'pemohon12', '$2y$10$mS7YSjUiYCXiNQf/P8FvmOzufUUmozEX/RXvIw/Md90uwciQw2hV2', 'pemohon12@gmail.com', 'Pemohon', 1, NULL, NULL),
+(22, 'pemohon13', '$2y$10$4k8G4C/cQiS2rvL2z5Ix7.yhCufWJWu99dYdM7e2D4r0Qoc7npdnu', 'pemohon13@gmail.com', 'Pemohon', 1, NULL, NULL),
+(24, 'pemohon15', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'pemohon15@gmail.com', 'Pemohon', 1, NULL, NULL),
+(25, 'rudiindratno', '$2y$10$k4fsCyWz3tU0JAt2SftJ8eRAiZsiKLKc0kWs3NTy0Kw9IKUdY6HAq', 'rudiindratno@petugas.local', 'Kepala UPT', 1, NULL, NULL),
+(26, 'kepala4', '$2y$10$JE/vccJYrA6ZX/ts8UivwuUvbJL.jykyDzmgaap1J4zgXkEGNaj/G', 'kepala4@gmail.com', 'Kepala UPT', 1, NULL, NULL),
+(27, 'admin3', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'admin3@gmail.com', 'Admin', 1, NULL, NULL),
+(30, 'poltesa', '$2y$10$tWs9BdMhagOsWTwFNZkCzu0wxq/ZqrxBrE37.rCPFQOX4SWk/ZapS', 'poltesa@gmail.com', 'Pemohon', 1, NULL, NULL),
+(31, '12345', '$2y$10$LRkHmAhln.QlB5bxf7MM..urFm2q7JLQ7l5AbuKIodZ204upOaL3.', '12345@emetrologi.go.id', 'Petugas', 1, NULL, NULL),
+(32, 'ergusp', '$2y$10$E9JLkFQeUii0V0hI9Xgp3uNxIkFgk8iUmzT/EG5LogAm0nLDlcWwy', 'ergusp@petugas.local', 'Petugas', 1, NULL, NULL),
+(33, 'ergusm', '$2y$10$.0.lGjgYC0E0ehtmagsMYOgsO8Ss6vXFm3nUVsZggpB4GRYI2Kz3G', 'ergus11@gmail.com', 'Pemohon', 1, NULL, 'profil_33_1780396103.jpg'),
+(34, 'hotmixpro', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'hotmixpro@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(35, 'palapa_semangat', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'palapa_semangat@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(36, 'niaga_jaya_utara', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'niaga_jaya@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(37, 'sinar_samudra', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'sinar_samudra@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(38, 'akr_setapuk', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'akr_setapuk@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(39, 'akr_passy', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'akr_passy@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(40, 'aphong_skw', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'aphong@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(41, 'apotik_selakau', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'apotik_selakau@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(42, 'ratu_sepudak', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'ratu_sepudak@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(43, 'sinar_mas_skw', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'sinar_mas_skw@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(44, 'tk_ub_skw', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'tk_ub@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(45, 'kadin_skw', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'kadin_skw@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(46, 'garuda_skw', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'garuda_skw@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(47, 'leo_laundry', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'leo_laundry@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(48, 'cipta_serasi', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'cipta_serasi@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(49, 'duta_asa_jaya', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'duta_asa_jaya@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(50, 'hypermart_skw', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'hypermart_skw@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(51, 'pasiran_jaya', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'pasiran_jaya@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(52, 'sinka_sinye', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'sinka_sinye@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(53, 'gunung_jaya_skw', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'gunung_jaya_skw@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(54, 'ardiansyah_skw', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'ardiansyah_skw@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(55, 'hadiyah_skw', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'hadiyah_skw@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(56, 'mitra_abadi', '$2y$10$cFJvMth/ncXVdQmQyehAyO8LNn76lKgdMGncuaRMEolHL4l4AhLDu', 'mitra_abadi@pemohon.local', 'Pemohon', 1, NULL, NULL),
+(57, 'Kepala_UPT', '$2y$10$QqnZ1/s6S6JlSlSScQJACOpiswVMAX8lDuVBrgZWpO8xtHEbEkytq', 'Kepala_UPT@petugas.local', 'Kepala UPT', 1, NULL, NULL),
+(58, 'admin5', '$2y$10$4bJ8we180j.EKiUUrz4N0OunNbL2Q41iRGfiNLuGyMxUdWovKfDJ2', 'ergus@gmail.com', 'Admin', 1, NULL, NULL),
+(59, 'pahrul', '$2y$10$n8KFR378xi7/bjkybRcVTui8RAiNwEjV4V0u7S/xM7FV2lVjpA.3K', 'pahrulasikin13@gmail.com', 'Pemohon', 1, NULL, NULL),
+(60, 'Sisko', '$2y$10$cxt7k5/v8EfqKV7mez5hpeyPI9w4wp7Cgwip1nf176FzEY0GZDNr.', 'sisko@gmail.com', 'Pemohon', 1, NULL, NULL),
+(61, 'admin', '$2y$10$tzjJIckZedXZi4oFCocOjuIl60ZFAHZnmeGsGwNnpkZ0d0QdZSwhG', 'admin@skhp.go.id', 'Admin', 0, NULL, NULL),
+(62, 'pemohon', '$2y$10$OpZv5oYjyHY.VUxa1VDo4.lXHDdmC7TqinBYsfRDhQ.gGJjZXKZz2', 'pemohon@gmail.com', 'Pemohon', 0, NULL, NULL),
+(64, 'kepalaupt', '$2y$10$kb.l0lZiMM7yOhIAMcm9Deu4RjTVUE1Zzj9Cb3rZFi5Rg2ktow0UO', 'kepalaupt@gmail.com', 'Kepala UPT', 0, NULL, NULL),
+(65, 'petugas', '$2y$10$H2w9PQvn47/7cSznFY.EhuyL5kfwdhUnnq5yvPSWlCESkQAWKFEKm', 'petugas@petugas.local', 'Petugas', 0, 'f23c09ec3bb5df0a10b88c316d5cc3172b3c2a4dc9abebf6876f63bb1c9da6db', NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `alat_spbu`
+--
+ALTER TABLE `alat_spbu`
+  ADD PRIMARY KEY (`id_alat`);
+
+--
+-- Indexes for table `alat_timbangan`
+--
+ALTER TABLE `alat_timbangan`
+  ADD PRIMARY KEY (`id_alat`);
+
+--
+-- Indexes for table `alat_uttp`
+--
+ALTER TABLE `alat_uttp`
+  ADD PRIMARY KEY (`id_alat`),
+  ADD KEY `alat_uttp_id_pemohon_foreign` (`id_pemohon`);
+
+--
+-- Indexes for table `cerapan_tera`
+--
+ALTER TABLE `cerapan_tera`
+  ADD PRIMARY KEY (`id_cerapan`),
+  ADD KEY `id_surat_tugas` (`id_surat_tugas`),
+  ADD KEY `id_petugas` (`id_petugas`);
+
+--
+-- Indexes for table `log_aktivitas`
+--
+ALTER TABLE `log_aktivitas`
+  ADD PRIMARY KEY (`id_log`),
+  ADD KEY `idx_id_user` (`id_user`),
+  ADD KEY `idx_created_at` (`created_at`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pemohon`
+--
+ALTER TABLE `pemohon`
+  ADD PRIMARY KEY (`id_pemohon`),
+  ADD KEY `pemohon_id_user_foreign` (`id_user`);
+
+--
+-- Indexes for table `pengujian`
+--
+ALTER TABLE `pengujian`
+  ADD PRIMARY KEY (`id_pengujian`),
+  ADD KEY `pengujian_id_alat_foreign` (`id_alat`);
+
+--
+-- Indexes for table `petugas`
+--
+ALTER TABLE `petugas`
+  ADD PRIMARY KEY (`id_petugas`),
+  ADD KEY `petugas_id_user_foreign` (`id_user`);
+
+--
+-- Indexes for table `skhp`
+--
+ALTER TABLE `skhp`
+  ADD PRIMARY KEY (`id_skhp`),
+  ADD UNIQUE KEY `no_surat` (`no_surat`),
+  ADD KEY `skhp_id_pengujian_foreign` (`id_pengujian`),
+  ADD KEY `skhp_id_petugas_foreign` (`id_petugas`);
+
+--
+-- Indexes for table `surat_tugas`
+--
+ALTER TABLE `surat_tugas`
+  ADD PRIMARY KEY (`id_surat_tugas`),
+  ADD KEY `id_alat` (`id_alat`),
+  ADD KEY `id_petugas` (`id_petugas`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `idx_verification_token` (`verification_token`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `alat_uttp`
+--
+ALTER TABLE `alat_uttp`
+  MODIFY `id_alat` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+
+--
+-- AUTO_INCREMENT for table `cerapan_tera`
+--
+ALTER TABLE `cerapan_tera`
+  MODIFY `id_cerapan` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `log_aktivitas`
+--
+ALTER TABLE `log_aktivitas`
+  MODIFY `id_log` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=317;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `pengujian`
+--
+ALTER TABLE `pengujian`
+  MODIFY `id_pengujian` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `skhp`
+--
+ALTER TABLE `skhp`
+  MODIFY `id_skhp` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `surat_tugas`
+--
+ALTER TABLE `surat_tugas`
+  MODIFY `id_surat_tugas` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `alat_spbu`
+--
+ALTER TABLE `alat_spbu`
+  ADD CONSTRAINT `alat_spbu_id_alat_foreign` FOREIGN KEY (`id_alat`) REFERENCES `alat_uttp` (`id_alat`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `alat_timbangan`
+--
+ALTER TABLE `alat_timbangan`
+  ADD CONSTRAINT `alat_timbangan_id_alat_foreign` FOREIGN KEY (`id_alat`) REFERENCES `alat_uttp` (`id_alat`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `alat_uttp`
+--
+ALTER TABLE `alat_uttp`
+  ADD CONSTRAINT `alat_uttp_id_pemohon_foreign` FOREIGN KEY (`id_pemohon`) REFERENCES `pemohon` (`id_pemohon`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pemohon`
+--
+ALTER TABLE `pemohon`
+  ADD CONSTRAINT `pemohon_id_user_foreign` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pengujian`
+--
+ALTER TABLE `pengujian`
+  ADD CONSTRAINT `pengujian_id_alat_foreign` FOREIGN KEY (`id_alat`) REFERENCES `alat_uttp` (`id_alat`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `petugas`
+--
+ALTER TABLE `petugas`
+  ADD CONSTRAINT `petugas_id_user_foreign` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+--
+-- Constraints for table `skhp`
+--
+ALTER TABLE `skhp`
+  ADD CONSTRAINT `skhp_id_pengujian_foreign` FOREIGN KEY (`id_pengujian`) REFERENCES `pengujian` (`id_pengujian`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `skhp_id_petugas_foreign` FOREIGN KEY (`id_petugas`) REFERENCES `petugas` (`id_petugas`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `surat_tugas`
+--
+ALTER TABLE `surat_tugas`
+  ADD CONSTRAINT `surat_tugas_ibfk_1` FOREIGN KEY (`id_alat`) REFERENCES `alat_uttp` (`id_alat`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
