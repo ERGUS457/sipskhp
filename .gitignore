@@ -19,3 +19,5 @@ composer.lock
 /tests/tests/
 /tests/results/
 grep.exe.stackdump
+asset/*.docx
+asset/*.xlsx

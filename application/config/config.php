@@ -384,11 +384,11 @@ $config['encryption_key'] = 'SIPSKHP_TERA_S3cur3K3y_M3trol0g1_S1ngkaw4ng_2026!';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-$config['sess_driver'] = 'files';
+$config['sess_driver'] = 'database';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = APPPATH.'cache/sessions';
+$config['sess_save_path'] = 'ci_sessions';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = TRUE; // Hancurkan session lama saat ID di-regenerasi (mencegah Session Fixation)
