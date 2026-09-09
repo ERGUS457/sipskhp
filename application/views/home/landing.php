@@ -600,19 +600,67 @@
         100% { transform: scale(1.5); opacity: 0; }
     }
 
-    /* Responsive */
+    /* Responsive Styles for Mobile & Tablet */
     @media (max-width: 768px) {
-        .hero-title { font-size: 2.2rem; }
-        .hero-text  { font-size: 1rem; }
-        .section-title { font-size: 1.8rem; }
-        .step-number { width: 60px; height: 60px; font-size: 1.5rem; }
-        .gallery-slide-item { width: 260px; height: 185px; }
-        .lightbox-prev { left: -50px; }
-        .lightbox-next { right: -50px; }
+        .hero-section {
+            padding-top: 90px;
+            padding-bottom: 50px;
+            min-height: calc(100vh - 70px);
+        }
+        .hero-badge {
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+            padding: 6px 14px;
+            white-space: normal;
+            text-align: left;
+            line-height: 1.4;
+            max-width: 100%;
+            margin-bottom: 16px;
+            display: inline-flex;
+        }
+        .hero-title { 
+            font-size: 2rem; 
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        .hero-text  { 
+            font-size: 0.95rem; 
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .hero-actions { 
+            flex-direction: column; 
+            gap: 12px;
+        }
+        .btn-hero-primary, .btn-hero-outline { 
+            width: 100%; 
+            justify-content: center; 
+            padding: 13px 24px;
+            font-size: 0.95rem;
+        }
+        .hero-slide-dots {
+            bottom: 18px;
+            right: 20px;
+        }
+        .section-title { font-size: 1.7rem; }
+        .section-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+        .step-number { width: 55px; height: 55px; font-size: 1.4rem; margin-bottom: 12px; }
+        .step-title { font-size: 1.15rem; }
+        .step-desc { font-size: 0.95rem; }
+        .gallery-slide-item { width: 240px; height: 170px; }
+        .lightbox-prev { left: 10px; }
+        .lightbox-next { right: 10px; }
+        .float-wa {
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            bottom: 20px;
+            right: 20px;
+        }
     }
     @media (max-width: 480px) {
-        .hero-actions { flex-direction: column; }
-        .btn-hero-primary, .btn-hero-outline { width: 100%; justify-content: center; }
+        .hero-title { font-size: 1.75rem; }
+        .btn-hero-primary, .btn-hero-outline { font-size: 0.9rem; }
     }
 </style>
 
