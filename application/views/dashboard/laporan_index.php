@@ -918,8 +918,14 @@ function toggleEditLokasi() {
 function simpanLokasi() {
     var lok = $('#inputLokasi').val().trim();
     var tgl = $('#inputTglLaporan').val().trim();
-    if (!lok) { alert('Lokasi tidak boleh kosong.'); return; }
-    if (!tgl) { alert('Tanggal tidak boleh kosong.'); return; }
+    if (!lok) { 
+        Swal.fire({ icon: 'warning', title: 'Perhatian', text: 'Lokasi tidak boleh kosong.', confirmButtonColor: '#065f46' });
+        return; 
+    }
+    if (!tgl) { 
+        Swal.fire({ icon: 'warning', title: 'Perhatian', text: 'Tanggal tidak boleh kosong.', confirmButtonColor: '#065f46' });
+        return; 
+    }
 
     // Clean up if the user typed the location prefix in the date field
     if (tgl.startsWith(lok + ',')) {
@@ -976,7 +982,10 @@ function simpanTtd() {
     var namD = $('#inputNamaDilaporkan').val().trim();
     var nipD = $('#inputNipDilaporkan').val().trim();
 
-    if (!namM || !namD) { alert('Nama pejabat tidak boleh kosong.'); return; }
+    if (!namM || !namD) { 
+        Swal.fire({ icon: 'warning', title: 'Perhatian', text: 'Nama pejabat tidak boleh kosong.', confirmButtonColor: '#065f46' });
+        return; 
+    }
 
     // Update tampilan UI web
     $('#dispJabatanMengetahui').html(jabM.replace(/,/g, ',<br>'));

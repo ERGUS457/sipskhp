@@ -97,7 +97,7 @@
                                     </button>
                                     <a href="<?= site_url('petugas/hapus/' . $p['id_petugas']) ?>"
                                        class="btn btn-light btn-sm px-3 shadow-sm rounded-pill text-danger fw-semibold border btn-delete"
-                                       onclick="return confirm('Yakin ingin menghapus petugas ini?')">
+                                       data-nama="<?= htmlspecialchars((string)$p['nama_petugas']) ?>">
                                         <i class="fas fa-trash-alt me-1"></i> Hapus
                                     </a>
                                 </td>
@@ -224,6 +224,27 @@ $(document).ready(function() {
         $('#edit_pangkat').val($(this).data('pangkat'));
         $('#edit_jabatan').val($(this).data('jabatan'));
         $('#edit_username').val($(this).data('username'));
+    });
+
+    // Konfirmasi Hapus Petugas dengan SweetAlert2
+    $(document).on('click', '.btn-delete', function(e) {
+        e.preventDefault();
+        const deleteUrl = $(this).attr('href');
+        const nama = $(this).data('nama') || 'petugas ini';
+        Swal.fire({
+            title: 'Hapus Petugas?',
+            html: `Apakah Anda yakin ingin menghapus petugas <strong>${nama}</strong>?<br><small class="text-muted">Data petugas beserta akun aplikasinya akan dihapus permanen.</small>`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: '<i class="fas fa-trash-alt me-1"></i> Ya, Hapus Petugas',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = deleteUrl;
+            }
+        });
     });
 });
 </script>
