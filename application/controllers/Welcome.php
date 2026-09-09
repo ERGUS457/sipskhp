@@ -11,10 +11,21 @@ class Welcome extends CI_Controller {
 
 	public function login()
 	{
-		
 		if ($this->input->method() === 'post') {
-			$login = $this->input->post('login');
-			$password = $this->input->post('password');
+			$login = trim((string)$this->input->post('login'));
+			$password = (string)$this->input->post('password');
+
+			// Validasi input kosong dengan pesan informatif
+			if ($login === '' && $password === '') {
+				$this->session->set_flashdata('error', 'Silakan masukkan <strong>Username/Email</strong> dan <strong>Kata Sandi</strong> Anda.');
+				redirect('login');
+			} elseif ($login === '') {
+				$this->session->set_flashdata('error', 'Silakan masukkan <strong>Username atau Alamat Email</strong> Anda.');
+				redirect('login');
+			} elseif ($password === '') {
+				$this->session->set_flashdata('error', 'Silakan masukkan <strong>Kata Sandi (Password)</strong> Anda.');
+				redirect('login');
+			}
 
 			// Mencari user berdasarkan username ATAU email di tabel 'user'
 			$this->db->group_start();
@@ -66,11 +77,11 @@ class Welcome extends CI_Controller {
 						redirect('petugas-dashboard');
 					}
 				} else {
-					$this->session->set_flashdata('error', 'Kata Sandi yang Anda masukkan salah.');
+					$this->session->set_flashdata('error', '<strong>Kata Sandi salah!</strong> Periksa kembali huruf besar/kecil (Caps Lock) dan pastikan kata sandi yang Anda ketik sudah sesuai.');
 					redirect('login');
 				}
 			} else {
-				$this->session->set_flashdata('error', 'Akun tidak ditemukan. Pastikan Username atau Email Anda benar.');
+				$this->session->set_flashdata('error', '<strong>Akun tidak ditemukan!</strong> Username atau Email "<strong>' . htmlspecialchars($login) . '</strong>" belum terdaftar di sistem. Silakan periksa kembali atau lakukan pendaftaran akun baru.');
 				redirect('login');
 			}
 		}
@@ -110,42 +121,101 @@ class Welcome extends CI_Controller {
 	{
 		if ($this->input->method() === 'post') {
 			$this->load->library('form_validation');
+
+			// Konfigurasi pesan default form validation berbahasa Indonesia
+			$this->form_validation->set_message('required', '{field} wajib diisi.');
+			$this->form_validation->set_message('valid_email', 'Format {field} tidak valid (contoh: user@domain.com).');
+			$this->form_validation->set_message('is_unique', '{field} ini sudah terdaftar di sistem.');
+			$this->form_validation->set_message('min_length', '{field} minimal {param} karakter.');
+			$this->form_validation->set_message('max_length', '{field} maksimal {param} karakter.');
+			$this->form_validation->set_message('matches', '{field} tidak sesuai dengan kolom {param}.');
+			$this->form_validation->set_message('alpha_numeric', '{field} hanya boleh berisi huruf dan angka.');
+			$this->form_validation->set_message('regex_match', 'Format {field} tidak sesuai ketentuan.');
 			
 			// -------------------------------------------------------
 			// Validasi User
 			// -------------------------------------------------------
-			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[user.email]',
-				array('is_unique' => 'Email ini sudah terdaftar. Silakan gunakan email lain atau login.')
+			$this->form_validation->set_rules(
+				'email',
+				'Alamat Email',
+				'required|valid_email|is_unique[user.email]',
+				[
+					'required'    => 'Alamat Email wajib diisi.',
+					'valid_email' => 'Format Alamat Email tidak valid.',
+					'is_unique'   => 'Alamat Email ini sudah terdaftar. Silakan gunakan email lain atau langsung masuk ke akun Anda.'
+				]
 			);
-			$this->form_validation->set_rules('username', 'Username', 'required|is_unique[user.username]|alpha_numeric',
-				array(
-					'is_unique'     => 'Username ini sudah dipakai. Silakan pilih username lain.',
-					'alpha_numeric' => 'Username hanya boleh terdiri dari huruf dan angka.'
-				)
+			$this->form_validation->set_rules(
+				'username',
+				'Username',
+				'required|alpha_numeric|min_length[4]|max_length[30]|is_unique[user.username]',
+				[
+					'required'      => 'Username wajib diisi.',
+					'alpha_numeric' => 'Username hanya boleh terdiri dari huruf dan angka tanpa spasi atau simbol.',
+					'min_length'    => 'Username minimal 4 karakter.',
+					'max_length'    => 'Username maksimal 30 karakter.',
+					'is_unique'     => 'Username ini sudah dipakai oleh pengguna lain. Silakan gunakan username lain.'
+				]
 			);
-			$this->form_validation->set_rules('password', 'Kata Sandi', 'required|min_length[8]');
-			$this->form_validation->set_rules('password_confirm', 'Konfirmasi Kata Sandi', 'required|matches[password]');
+			$this->form_validation->set_rules(
+				'password',
+				'Kata Sandi',
+				'required|min_length[8]',
+				[
+					'required'   => 'Kata Sandi wajib diisi.',
+					'min_length' => 'Kata Sandi minimal 8 karakter demi keamanan akun Anda.'
+				]
+			);
+			$this->form_validation->set_rules(
+				'password_confirm',
+				'Konfirmasi Kata Sandi',
+				'required|matches[password]',
+				[
+					'required' => 'Konfirmasi Kata Sandi wajib diisi.',
+					'matches'  => 'Konfirmasi Kata Sandi tidak cocok dengan Kata Sandi yang dimasukkan.'
+				]
+			);
 			
 			// -------------------------------------------------------
 			// Validasi Pemohon
 			// -------------------------------------------------------
-			$this->form_validation->set_rules('nama_pemilik', 'Nama Pemilik', 'required');
-			$this->form_validation->set_rules('jenis_usaha', 'Jenis Tempat Usaha', 'required');
+			$this->form_validation->set_rules(
+				'nama_pemilik',
+				'Nama Instansi / Pemilik',
+				'required',
+				['required' => 'Nama Instansi / Pemilik wajib diisi sesuai KTP/dokumen resmi.']
+			);
+			$this->form_validation->set_rules(
+				'jenis_usaha',
+				'Jenis Tempat Usaha',
+				'required',
+				['required' => 'Jenis Tempat Usaha wajib diisi.']
+			);
 
-			// [Saran 2] Validasi format nomor HP Indonesia
+			// Validasi format nomor HP Indonesia (Dikirim sebagai ARRAY agar karakter pipe '|' tidak dipecah oleh CI3)
 			$this->form_validation->set_rules(
 				'kontak_pemohon',
 				'Nomor Handphone',
-				'required|min_length[10]|max_length[15]|regex_match[/^(08|\+62|628)[0-9]{7,12}$/]',
 				[
-					'required'    => 'Nomor Handphone wajib diisi.',
-					'min_length'  => 'Nomor HP minimal 10 digit.',
-					'max_length'  => 'Nomor HP maksimal 15 digit.',
-					'regex_match' => 'Format nomor HP tidak valid. Gunakan format: 08xxx, +62xxx, atau 628xxx.',
+					'required',
+					'min_length[10]',
+					'max_length[15]',
+					'regex_match[/^(08|628|\+62)[0-9]{7,12}$/]'
+				],
+				[
+					'required'    => 'Nomor Handphone (WhatsApp) wajib diisi.',
+					'min_length'  => 'Nomor Handphone minimal 10 digit angka.',
+					'max_length'  => 'Nomor Handphone maksimal 15 digit angka.',
+					'regex_match' => 'Format Nomor Handphone tidak valid. Gunakan format yang benar diawali 08, 628, atau +62 (contoh: 081234567890).'
 				]
 			);
 
-			$this->form_validation->set_rules('alamat_usaha', 'Alamat Lengkap Usaha', 'required');
+			$this->form_validation->set_rules(
+				'alamat_usaha',
+				'Alamat Lengkap Usaha',
+				'required',
+				['required' => 'Alamat Lengkap Perusahaan / Toko wajib diisi.']
+			);
 
 			if ($this->form_validation->run() === FALSE) {
 				// Jika gagal validasi, form view akan menampilkan validation_errors()

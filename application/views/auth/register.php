@@ -121,27 +121,32 @@
 
                 <div class="auth-body px-md-5">
 
-                    <!-- Menampilkan pesan info (CodeIgniter 3 syntax) -->
+                    <!-- Menampilkan pesan info -->
                     <?php if ($this->session->flashdata('info')) : ?>
-                        <div class="alert alert-info d-flex align-items-center" role="alert" style="font-size: 1.05rem;">
-                            <i class="fas fa-info-circle me-2"></i>
+                        <div class="alert alert-info d-flex align-items-center mb-4" role="alert" style="font-size: 1rem; border-radius: 8px;">
+                            <i class="fas fa-info-circle fs-4 me-3 flex-shrink-0"></i>
                             <div><?= $this->session->flashdata('info') ?></div>
                         </div>
                     <?php endif; ?>
 
                     <!-- Menampilkan pesan error umum -->
                     <?php if ($this->session->flashdata('error')) : ?>
-                        <div class="alert alert-danger d-flex align-items-center" role="alert" style="font-size: 1.05rem;">
-                            <i class="fas fa-exclamation-circle me-2"></i>
+                        <div class="alert alert-danger d-flex align-items-center mb-4" role="alert" style="font-size: 1rem; border-radius: 8px;">
+                            <i class="fas fa-exclamation-circle fs-4 me-3 flex-shrink-0"></i>
                             <div><?= $this->session->flashdata('error') ?></div>
                         </div>
                     <?php endif; ?>
 
                     <!-- Menampilkan pesan error validasi Form CodeIgniter 3 -->
                     <?php if (validation_errors()) : ?>
-                        <div class="alert alert-warning" role="alert" style="font-size: 1.05rem;">
-                            <strong>Perhatian:</strong><br>
-                            <?= validation_errors() ?>
+                        <div class="alert alert-warning mb-4" role="alert" style="font-size: 0.98rem; border-radius: 8px;">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-exclamation-triangle fs-5 text-warning me-2"></i>
+                                <strong>Periksa Kembali Data Pendaftaran:</strong>
+                            </div>
+                            <div class="ps-2">
+                                <?= validation_errors('<div class="mb-1"><i class="fas fa-times-circle text-danger me-2"></i>', '</div>') ?>
+                            </div>
                         </div>
                     <?php endif; ?>
 
@@ -273,8 +278,37 @@
     </div>
 </div>
 
-<!-- SweetAlert script tidak perlu dipanggil ulang dari internet kalau sudah ada di footer. Namun sesuai permintaan tidak apa ada, hanya dihapus pemanggil duplicate -->
+<!-- Script untuk SweetAlert & Form Interaktivitas -->
 <script>
+    // Cek apakah ada flashdata 'success' dari session
+    <?php if ($this->session->flashdata('success')) : ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'Pendaftaran Berhasil!',
+            text: <?= json_encode($this->session->flashdata('success')) ?>,
+            confirmButtonColor: '#065f46'
+        });
+    <?php endif; ?>
+
+    // Cek error validasi dari server
+    <?php if (validation_errors()) : ?>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Periksa Kembali Data Pendaftaran',
+            html: <?= json_encode('<div style="text-align: left; font-size: 0.95rem;">' . validation_errors('<div class="mb-2"><i class="fas fa-exclamation-circle text-danger me-2"></i>', '</div>') . '</div>') ?>,
+            confirmButtonColor: '#065f46',
+            confirmButtonText: 'Perbaiki Data'
+        });
+    <?php elseif ($this->session->flashdata('error')) : ?>
+        Swal.fire({
+            icon: 'error',
+            title: 'Pendaftaran Gagal',
+            html: <?= json_encode($this->session->flashdata('error')) ?>,
+            confirmButtonColor: '#ef4444',
+            confirmButtonText: 'Coba Lagi'
+        });
+    <?php endif; ?>
+
     document.addEventListener('DOMContentLoaded', function() {
         // Logika untuk menampilkan hide/show password
         const toggleButtons = document.querySelectorAll('.toggle-btn');
@@ -284,19 +318,21 @@
                 const targetInput = document.getElementById(targetId);
                 const icon = this.querySelector('i');
 
-                if (targetInput.type === 'password') {
-                    targetInput.type = 'text';
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                } else {
-                    targetInput.type = 'password';
-                    icon.classList.remove('fa-eye-slash');
-                    icon.classList.add('fa-eye');
+                if (targetInput && icon) {
+                    if (targetInput.type === 'password') {
+                        targetInput.type = 'text';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        targetInput.type = 'password';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
                 }
             });
         });
 
-        // [Saran 2] Validasi format nomor HP real-time
+        // Validasi format nomor HP real-time
         window.validatePhone = function(input) {
             const val   = input.value.trim();
             const regex = /^(08|\+62|628)[0-9]{7,12}$/;
@@ -320,86 +356,104 @@
         };
 
         // Validasi Form Kustom sebelum Submit
-        const registerForm = document.querySelector('form');
         const submitBtn = document.querySelector('.btn-auth');
 
-        submitBtn.addEventListener('click', function(e) {
-            // Definisikan kolom-kolom wajib isi
-            const fieldsMap = [
-                { id: 'email', name: 'Alamat Email' },
-                { id: 'username', name: 'Username (Nama Pengguna)' },
-                { id: 'password', name: 'Kata Sandi' },
-                { id: 'password_confirm', name: 'Konfirmasi Kata Sandi' },
-                { id: 'nama_pemilik', name: 'Nama Lengkap Pemilik' },
-                { id: 'jenis_usaha', name: 'Jenis Tempat Usaha' },
-                { id: 'kontak_pemohon', name: 'Nomor Handphone' },
-                { id: 'alamat_usaha', name: 'Alamat Lengkap Usaha' },
-                { id: 'captcha', name: 'Jawaban CAPTCHA' }
-            ];
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function(e) {
+                // Definisikan kolom-kolom teks yang wajib diisi
+                const fieldsMap = [
+                    { id: 'email', name: 'Alamat Email' },
+                    { id: 'username', name: 'Username (Nama Pengguna)' },
+                    { id: 'password', name: 'Kata Sandi' },
+                    { id: 'password_confirm', name: 'Konfirmasi Kata Sandi' },
+                    { id: 'nama_pemilik', name: 'Nama Lengkap Pemilik' },
+                    { id: 'jenis_usaha', name: 'Jenis Tempat Usaha' },
+                    { id: 'kontak_pemohon', name: 'Nomor Handphone (WhatsApp)' },
+                    { id: 'alamat_usaha', name: 'Alamat Lengkap Usaha' }
+                ];
 
-            let fieldKosongArray = [];
+                let fieldKosongArray = [];
 
-            // Mengecek setiap field apakah kosong
-            fieldsMap.forEach(function(field) {
-                let el = document.getElementById(field.id);
-                if (!el.value.trim()) {
-                    fieldKosongArray.push(field.name);
-                }
-            });
-
-            // Jika ada field kosong, tahan pengiriman dan munculkan pesan
-            if (fieldKosongArray.length > 0) {
-                e.preventDefault(); 
-                
-                // Menyusun pesan 
-                let listTeks = fieldKosongArray.map(item => `<li>${item}</li>`).join('');
-                
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Mohon Lengkapi Data Anda',
-                    html: `Masih ada kolom yang belum diisi:<ul style="text-align: left; margin-top: 10px; padding-left: 20px;">${listTeks}</ul> <p style="margin-top:15px; font-size: 0.95rem;">Silakan lengkapi terlebih dahulu untuk memproses pendaftaran.</p>`,
-                    confirmButtonColor: '#065f46',
-                    confirmButtonText: 'Baik, Akan Saya Lengkapi'
+                // Mengecek setiap field apakah kosong
+                fieldsMap.forEach(function(field) {
+                    let el = document.getElementById(field.id);
+                    if (el && !el.value.trim()) {
+                        fieldKosongArray.push(field.name);
+                    }
                 });
-            } else {
-                // Tambahan: cek jika password kurang dari syarat atau tak identik
-                let pass = document.getElementById('password').value;
-                let passConf = document.getElementById('password_confirm').value;
+
+                // Cek verifikasi robot captcha
+                const captchaCheck = document.getElementById('captcha_hidden');
+                if (!captchaCheck || !captchaCheck.checked) {
+                    fieldKosongArray.push('Verifikasi Keamanan ("I\'m not a robot")');
+                }
+
+                // Jika ada field kosong, tahan pengiriman dan munculkan pesan
+                if (fieldKosongArray.length > 0) {
+                    e.preventDefault(); 
+                    
+                    let listTeks = fieldKosongArray.map(item => `<li>${item}</li>`).join('');
+                    
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Mohon Lengkapi Data Anda',
+                        html: `Masih ada kolom yang belum diisi:<ul style="text-align: left; margin-top: 10px; padding-left: 20px;">${listTeks}</ul> <p style="margin-top:15px; font-size: 0.95rem;">Silakan lengkapi terlebih dahulu untuk memproses pendaftaran.</p>`,
+                        confirmButtonColor: '#065f46',
+                        confirmButtonText: 'Baik, Akan Saya Lengkapi'
+                    });
+                    return;
+                }
+
+                // Cek panjang dan kesesuaian kata sandi
+                let passEl = document.getElementById('password');
+                let passConfEl = document.getElementById('password_confirm');
+                let pass = passEl ? passEl.value : '';
+                let passConf = passConfEl ? passConfEl.value : '';
 
                 if (pass.length < 8) {
                     e.preventDefault();
                     Swal.fire({ icon: 'error', title: 'Kata Sandi Terlalu Pendek', text: 'Mohon gunakan minimal 8 karakter demi keamanan akun Anda.', confirmButtonColor: '#065f46' });
-                } else if (pass !== passConf) {
-                    e.preventDefault();
-                    Swal.fire({ icon: 'error', title: 'Kata Sandi Tidak Sama', text: 'Pastikan ulangi kata sandi persis seperti yang Anda masukkan sebelumnya.', confirmButtonColor: '#065f46' });
-                } else {
-                    // [Saran 2] Cek format nomor HP sebelum submit
-                    const phoneVal   = document.getElementById('kontak_pemohon').value.trim();
-                    const phoneRegex = /^(08|\+62|628)[0-9]{7,12}$/;
-                    if (!phoneRegex.test(phoneVal) || phoneVal.length < 10 || phoneVal.length > 15) {
-                        e.preventDefault();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Nomor HP Tidak Valid',
-                            html: 'Format nomor HP tidak sesuai.<br>Gunakan: <b>08xxx</b>, <b>+62xxx</b>, atau <b>628xxx</b> (10–15 digit).',
-                            confirmButtonColor: '#065f46'
-                        });
-                    } else {
-                        // Cek kotak persetujuan
-                        const terms = document.getElementById('termsCheck');
-                        if (!terms.checked) {
-                            e.preventDefault();
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Persetujuan Diperlukan',
-                                text: 'Anda harus mencentang kotak pernyataan penjaminan data sebelum melanjutkan pendaftaran.',
-                                confirmButtonColor: '#065f46'
-                            });
-                        }
-                    }
+                    if (passEl) passEl.focus();
+                    return;
                 }
-            }
-        });
+                
+                if (pass !== passConf) {
+                    e.preventDefault();
+                    Swal.fire({ icon: 'error', title: 'Kata Sandi Tidak Cocok', text: 'Pastikan konfirmasi kata sandi persis seperti kata sandi yang Anda masukkan.', confirmButtonColor: '#065f46' });
+                    if (passConfEl) passConfEl.focus();
+                    return;
+                }
+
+                // Cek format nomor HP sebelum submit
+                const phoneEl = document.getElementById('kontak_pemohon');
+                const phoneVal = phoneEl ? phoneEl.value.trim() : '';
+                const phoneRegex = /^(08|\+62|628)[0-9]{7,12}$/;
+                if (!phoneRegex.test(phoneVal) || phoneVal.length < 10 || phoneVal.length > 15) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Nomor HP Tidak Valid',
+                        html: 'Format nomor HP tidak sesuai.<br>Gunakan: <b>08xxx</b>, <b>+62xxx</b>, atau <b>628xxx</b> (10–15 digit angka).',
+                        confirmButtonColor: '#065f46'
+                    });
+                    if (phoneEl) phoneEl.focus();
+                    return;
+                }
+
+                // Cek kotak persetujuan
+                const terms = document.getElementById('termsCheck');
+                if (terms && !terms.checked) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Persetujuan Diperlukan',
+                        text: 'Anda harus mencentang kotak pernyataan penjaminan data sebelum melanjutkan pendaftaran.',
+                        confirmButtonColor: '#065f46'
+                    });
+                    return;
+                }
+            });
+        }
     });
 </script>
 

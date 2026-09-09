@@ -113,16 +113,16 @@
                 <div class="auth-body">
                     <!-- Menampilkan pesan error (jika ada) -->
                     <?php if ($this->session->flashdata('error')) : ?>
-                        <div class="alert alert-danger" role="alert" style="font-size: 1rem;">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
+                        <div class="alert alert-danger d-flex align-items-center mb-4" role="alert" style="font-size: 1rem; border-radius: 8px;">
+                            <i class="fas fa-exclamation-circle fs-4 me-3 flex-shrink-0"></i>
                             <div><?= $this->session->flashdata('error') ?></div>
                         </div>
                     <?php endif; ?>
 
-                    <!-- [Saran 4] Menampilkan pesan info (link verifikasi simulasi) -->
+                    <!-- Menampilkan pesan info (jika ada) -->
                     <?php if ($this->session->flashdata('info')) : ?>
-                        <div class="alert alert-info" role="alert" style="font-size: 1rem;">
-                            <i class="fas fa-envelope-open-text me-2"></i>
+                        <div class="alert alert-info d-flex align-items-center mb-4" role="alert" style="font-size: 1rem; border-radius: 8px;">
+                            <i class="fas fa-info-circle fs-4 me-3 flex-shrink-0"></i>
                             <div><?= $this->session->flashdata('info') ?></div>
                         </div>
                     <?php endif; ?>
@@ -177,9 +177,31 @@
         Swal.fire({
             icon: 'success',
             title: 'Berhasil!',
-            text: '<?= $this->session->flashdata('success') ?>',
+            text: <?= json_encode($this->session->flashdata('success')) ?>,
             showConfirmButton: false,
             timer: 2500
+        });
+    <?php endif; ?>
+
+    // Cek apakah ada flashdata 'error' dari session (gagal login dengan pesan jelas)
+    <?php if ($this->session->flashdata('error')) : ?>
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal Masuk',
+            html: <?= json_encode($this->session->flashdata('error')) ?>,
+            confirmButtonColor: '#ef4444',
+            confirmButtonText: '<i class="fas fa-redo me-1"></i> Coba Lagi'
+        });
+    <?php endif; ?>
+
+    // Cek apakah ada flashdata 'info' dari session
+    <?php if ($this->session->flashdata('info')) : ?>
+        Swal.fire({
+            icon: 'info',
+            title: 'Informasi',
+            html: <?= json_encode($this->session->flashdata('info')) ?>,
+            confirmButtonColor: '#0ea5e9',
+            confirmButtonText: 'Mengerti'
         });
     <?php endif; ?>
 
@@ -188,10 +210,10 @@
         const passwordInput = document.querySelector('#password');
         const loginInput = document.querySelector('#login');
         const btnLogin = document.querySelector('#btnLogin');
-        const icon = togglePassword.querySelector('i');
+        const icon = togglePassword ? togglePassword.querySelector('i') : null;
 
         // Fitur Hide/Show Password
-        if (togglePassword) {
+        if (togglePassword && passwordInput && icon) {
             togglePassword.addEventListener('click', function() {
                 const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordInput.setAttribute('type', type);
@@ -201,26 +223,40 @@
         }
 
         // Validasi Form Kustom dengan SweetAlert
-        btnLogin.addEventListener('click', function(e) {
-            if (loginInput.value.trim() === '' || passwordInput.value.trim() === '') {
-                e.preventDefault(); // Hentikan pengiriman form default
-                
-                let pesan = 'Harap isi semua kolom yang wajib!';
-                if (loginInput.value.trim() === '') {
-                    pesan = 'Mohon isi Username atau Email Anda terlebih dahulu.';
-                } else if (passwordInput.value.trim() === '') {
-                    pesan = 'Mohon isi Kata Sandi Anda terlebih dahulu.';
-                }
+        if (btnLogin && loginInput && passwordInput) {
+            btnLogin.addEventListener('click', function(e) {
+                const loginVal = loginInput.value.trim();
+                const passVal = passwordInput.value.trim();
 
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Kolom Belum Lengkap',
-                    text: pesan,
-                    confirmButtonColor: '#065f46',
-                    confirmButtonText: 'Baik, Saya Mengerti'
-                });
-            }
-        });
+                if (loginVal === '' || passVal === '') {
+                    e.preventDefault(); // Hentikan pengiriman form default
+                    
+                    let title = 'Kolom Belum Lengkap';
+                    let pesan = 'Harap lengkapi Username/Email dan Kata Sandi Anda!';
+
+                    if (loginVal === '' && passVal === '') {
+                        title = 'Data Masuk Belum Diisi';
+                        pesan = 'Silakan masukkan <b>Username atau Email</b> serta <b>Kata Sandi</b> Anda.';
+                    } else if (loginVal === '') {
+                        title = 'Username / Email Kosong';
+                        pesan = 'Silakan masukkan <b>Username atau Alamat Email</b> Anda terlebih dahulu.';
+                        loginInput.focus();
+                    } else if (passVal === '') {
+                        title = 'Kata Sandi Kosong';
+                        pesan = 'Silakan masukkan <b>Kata Sandi (Password)</b> Anda terlebih dahulu.';
+                        passwordInput.focus();
+                    }
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: title,
+                        html: pesan,
+                        confirmButtonColor: '#065f46',
+                        confirmButtonText: 'Baik, Saya Lengkapi'
+                    });
+                }
+            });
+        }
     });
 
     // Fitur SweetAlert Lupa Kata Sandi
