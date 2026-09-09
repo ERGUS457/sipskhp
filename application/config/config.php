@@ -22,6 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | If you need to allow multiple domains, remember that this file is still
 | a PHP script and you can easily do that on your own.
 |
+*/
 if (getenv('VERCEL_URL') || isset($_SERVER['VERCEL_URL']) || isset($_ENV['VERCEL_URL'])) {
 	$v_url = getenv('VERCEL_URL') ?: ($_SERVER['VERCEL_URL'] ?? $_ENV['VERCEL_URL']);
 	$config['base_url'] = 'https://' . rtrim($v_url, '/') . '/';
