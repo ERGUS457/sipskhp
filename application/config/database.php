@@ -91,7 +91,8 @@ if (!empty($neon_url)) {
 }
 
 $sslmode = getenv('DB_SSLMODE') ?: (isset($_ENV['DB_SSLMODE']) ? $_ENV['DB_SSLMODE'] : 'require');
-$options = getenv('DB_OPTIONS') ?: (isset($_ENV['DB_OPTIONS']) ? $_ENV['DB_OPTIONS'] : 'endpoint=ep-delicate-bar-b3tat82n');
+$endpoint_name = explode('.', $db_host)[0];
+$options = getenv('DB_OPTIONS') ?: (isset($_ENV['DB_OPTIONS']) ? $_ENV['DB_OPTIONS'] : 'endpoint=' . $endpoint_name);
 
 $db['default'] = array(
 	'dsn'	   => '',
