@@ -264,7 +264,7 @@
                         </div>
 
                         <div class="auth-footer">
-                            <p class="text-muted">Sudah mendaftar sebelumnya? <br><a href="<?= site_url('welcome/login') ?>">Masuk ke Akun Anda di sini</a></p>
+                            <p class="text-muted">Sudah mendaftar sebelumnya? <br><a href="<?= site_url('login') ?>">Masuk ke Akun Anda di sini</a></p>
                         </div>
                     </form>
                 </div>

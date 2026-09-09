@@ -174,7 +174,7 @@
                         </li>
                     <?php else: ?>
                         <li class="nav-item w-100 w-lg-auto mt-2 mt-lg-0 ms-lg-3">
-                            <a class="btn nav-btn nav-btn-outline w-100" href="<?= site_url('welcome/login') ?>">
+                            <a class="btn nav-btn nav-btn-outline w-100" href="<?= site_url('login') ?>">
                                 <i class="fas fa-sign-in-alt"></i> Masuk
                             </a>
                         </li>
