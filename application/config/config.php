@@ -23,12 +23,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-if (getenv('VERCEL_URL') || isset($_SERVER['VERCEL_URL']) || isset($_ENV['VERCEL_URL'])) {
-	$v_url = getenv('VERCEL_URL') ?: ($_SERVER['VERCEL_URL'] ?? $_ENV['VERCEL_URL']);
-	$config['base_url'] = 'https://' . rtrim($v_url, '/') . '/';
-} elseif (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !== 'localhost') {
+if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !== 'localhost') {
 	$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? 'https' : 'http';
 	$config['base_url'] = $protocol . '://' . $_SERVER['HTTP_HOST'] . '/';
+} elseif (getenv('VERCEL_URL') || isset($_SERVER['VERCEL_URL']) || isset($_ENV['VERCEL_URL'])) {
+	$v_url = getenv('VERCEL_URL') ?: ($_SERVER['VERCEL_URL'] ?? $_ENV['VERCEL_URL']);
+	$config['base_url'] = 'https://' . rtrim($v_url, '/') . '/';
 } else {
 	$config['base_url'] = 'https://sipskhp.vercel.app/';
 }
