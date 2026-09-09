@@ -6,8 +6,14 @@ $user_nav = $this->db->get_where('user', ['id_user' => $id_user_session])->row_a
 
 $nama_tampil = $pemohon_nav ? $pemohon_nav['nama_pemilik'] : $this->session->userdata('username');
 
-if (!empty($user_nav['foto_profil']) && file_exists(FCPATH . 'uploads/profil/' . $user_nav['foto_profil'])) {
-    $foto_profil = base_url('uploads/profil/' . $user_nav['foto_profil']);
+if (!empty($user_nav['foto_profil'])) {
+    if (strpos($user_nav['foto_profil'], 'data:image') === 0 || strpos($user_nav['foto_profil'], 'http') === 0) {
+        $foto_profil = $user_nav['foto_profil'];
+    } elseif (file_exists(FCPATH . 'uploads/profil/' . $user_nav['foto_profil'])) {
+        $foto_profil = base_url('uploads/profil/' . $user_nav['foto_profil']);
+    } else {
+        $foto_profil = 'https://ui-avatars.com/api/?name=' . urlencode($nama_tampil) . '&background=065f46&color=fff';
+    }
 } else {
     $foto_profil = 'https://ui-avatars.com/api/?name=' . urlencode($nama_tampil) . '&background=065f46&color=fff';
 }

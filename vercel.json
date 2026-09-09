@@ -9,12 +9,16 @@
   },
   "routes": [
     {
-      "src": "/asset/(.*)",
-      "dest": "/asset/$1"
+      "src": "/asset/cerapan_tera/(.*)",
+      "dest": "/api/index.php"
     },
     {
       "src": "/uploads/(.*)",
-      "dest": "/uploads/$1"
+      "dest": "/api/index.php"
+    },
+    {
+      "src": "/asset/(.*)",
+      "dest": "/asset/$1"
     },
     {
       "src": "/(.*)",

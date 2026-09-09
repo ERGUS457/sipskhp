@@ -299,4 +299,79 @@ class Welcome extends CI_Controller {
 			redirect('login');
 		}
 	}
+
+	// -------------------------------------------------------
+	// Endpoint Streaming Cerapan Tera (Support Serverless & Local)
+	// -------------------------------------------------------
+	public function cerapan($filename = '')
+	{
+		$filename = basename($filename);
+		if (empty($filename)) {
+			show_404();
+			return;
+		}
+
+		$local_path = FCPATH . 'asset/cerapan_tera/' . $filename;
+		if (file_exists($local_path)) {
+			$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+			$mime = 'application/octet-stream';
+			if ($ext === 'pdf') $mime = 'application/pdf';
+			elseif ($ext === 'xls') $mime = 'application/vnd.ms-excel';
+			elseif ($ext === 'xlsx') $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+			header('Content-Type: ' . $mime);
+			header('Content-Disposition: inline; filename="' . $filename . '"');
+			header('Content-Length: ' . filesize($local_path));
+			readfile($local_path);
+			exit;
+		}
+
+		// Cari di database cerapan_tera jika file fisik tidak ada di container serverless
+		$row = $this->db->get_where('cerapan_tera', ['file_cerapan' => $filename])->row_array();
+		if ($row && !empty($row['file_data'])) {
+			$data = base64_decode($row['file_data']);
+			$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+			$mime = 'application/octet-stream';
+			if ($ext === 'pdf') $mime = 'application/pdf';
+			elseif ($ext === 'xls') $mime = 'application/vnd.ms-excel';
+			elseif ($ext === 'xlsx') $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+			header('Content-Type: ' . $mime);
+			header('Content-Disposition: inline; filename="' . $filename . '"');
+			header('Content-Length: ' . strlen($data));
+			echo $data;
+			exit;
+		}
+
+		show_404();
+	}
+
+	// -------------------------------------------------------
+	// Endpoint Streaming Foto Profil (Support Serverless & Local)
+	// -------------------------------------------------------
+	public function uploads_profil($filename = '')
+	{
+		$filename = basename($filename);
+		if (empty($filename)) {
+			show_404();
+			return;
+		}
+
+		$local_path = FCPATH . 'uploads/profil/' . $filename;
+		if (file_exists($local_path)) {
+			$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+			$mime = 'image/jpeg';
+			if ($ext === 'png') $mime = 'image/png';
+			elseif ($ext === 'webp') $mime = 'image/webp';
+			elseif ($ext === 'gif') $mime = 'image/gif';
+
+			header('Content-Type: ' . $mime);
+			header('Content-Length: ' . filesize($local_path));
+			header('Cache-Control: public, max-age=86400');
+			readfile($local_path);
+			exit;
+		}
+
+		show_404();
+	}
 }

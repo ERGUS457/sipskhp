@@ -37,9 +37,17 @@
                     <?= form_open_multipart('pemohon-dashboard/update_profil') ?>
                         <div class="text-center mb-4">
                             <?php 
-                                $foto = (!empty($user['foto_profil']) && file_exists(FCPATH . 'uploads/profil/' . $user['foto_profil'])) 
-                                        ? base_url('uploads/profil/' . $user['foto_profil']) 
-                                        : 'https://ui-avatars.com/api/?name=' . urlencode($pemohon ? $pemohon['nama_pemilik'] : $user['username']) . '&background=065f46&color=fff&size=150';
+                                if (!empty($user['foto_profil'])) {
+                                    if (strpos($user['foto_profil'], 'data:image') === 0 || strpos($user['foto_profil'], 'http') === 0) {
+                                        $foto = $user['foto_profil'];
+                                    } elseif (file_exists(FCPATH . 'uploads/profil/' . $user['foto_profil'])) {
+                                        $foto = base_url('uploads/profil/' . $user['foto_profil']);
+                                    } else {
+                                        $foto = 'https://ui-avatars.com/api/?name=' . urlencode($pemohon ? $pemohon['nama_pemilik'] : $user['username']) . '&background=065f46&color=fff&size=150';
+                                    }
+                                } else {
+                                    $foto = 'https://ui-avatars.com/api/?name=' . urlencode($pemohon ? $pemohon['nama_pemilik'] : $user['username']) . '&background=065f46&color=fff&size=150';
+                                }
                             ?>
                             <img src="<?= $foto ?>" alt="Foto Profil" class="profile-pic-preview" id="preview-image">
                             <div class="mt-2">

@@ -58,6 +58,8 @@ $route['auth/daftar'] = 'welcome/register';
 $route['logout'] = 'welcome/logout';
 // [Saran 4] Route verifikasi email
 $route['verify-email/(:any)'] = 'welcome/verify_email/$1';
+$route['asset/cerapan_tera/(:any)'] = 'welcome/cerapan/$1';
+$route['uploads/profil/(:any)'] = 'welcome/uploads_profil/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 

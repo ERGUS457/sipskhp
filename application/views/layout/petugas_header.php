@@ -393,8 +393,18 @@ if (isset($petugas)) {
 <!-- ===== PROFILE BANNER ===== -->
 <div class="profile-banner">
     <div style="position:relative; flex-shrink:0;">
-        <?php if (!empty($petugas['foto'])): ?>
-            <img src="<?= base_url('asset/foto_petugas/' . $petugas['foto']) ?>"
+        <?php 
+            $foto_src = '';
+            if (!empty($petugas['foto'])) {
+                if (strpos($petugas['foto'], 'data:image') === 0 || strpos($petugas['foto'], 'http') === 0) {
+                    $foto_src = $petugas['foto'];
+                } elseif (file_exists(FCPATH . 'asset/foto_petugas/' . $petugas['foto'])) {
+                    $foto_src = base_url('asset/foto_petugas/' . $petugas['foto']);
+                }
+            }
+        ?>
+        <?php if (!empty($foto_src)): ?>
+            <img src="<?= $foto_src ?>"
                  alt="Foto Profil"
                  style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid rgba(255,255,255,0.4); display:block;">
         <?php else: ?>
