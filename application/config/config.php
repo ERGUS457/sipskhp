@@ -22,10 +22,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | If you need to allow multiple domains, remember that this file is still
 | a PHP script and you can easily do that on your own.
 |
-$is_vercel = isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL']);
-$protocol = $is_vercel || (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? 'https' : 'http';
-$host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? ($_SERVER['HTTP_HOST'] ?? 'localhost');
-$config['base_url'] = $protocol . '://' . $host . '/';
+if (getenv('VERCEL_URL') || isset($_SERVER['VERCEL_URL']) || isset($_ENV['VERCEL_URL'])) {
+	$v_url = getenv('VERCEL_URL') ?: ($_SERVER['VERCEL_URL'] ?? $_ENV['VERCEL_URL']);
+	$config['base_url'] = 'https://' . rtrim($v_url, '/') . '/';
+} elseif (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !== 'localhost') {
+	$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? 'https' : 'http';
+	$config['base_url'] = $protocol . '://' . $_SERVER['HTTP_HOST'] . '/';
+} else {
+	$config['base_url'] = 'https://sipskhp.vercel.app/';
+}
 
 /*
 |--------------------------------------------------------------------------
