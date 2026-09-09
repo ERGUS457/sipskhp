@@ -58,6 +58,7 @@
             color: var(--color-text);
             padding-top: 80px; /* Memberi ruang untuk navbar fixed-top */
             transition: background-color 0.3s ease, color 0.3s ease;
+            zoom: 0.8;
         }
         /* Responsive Font Size */
         html {

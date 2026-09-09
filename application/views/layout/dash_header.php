@@ -31,6 +31,7 @@
             background-color: #f0f2f5;
             color: #333;
             overflow-x: hidden;
+            zoom: 0.8;
         }
 
         /* Sidebar Styling (Premium Dark Gradient) */

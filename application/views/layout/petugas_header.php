@@ -16,6 +16,7 @@
             background-color: #f5f7fa;
             color: #1e293b;
             margin: 0;
+            zoom: 0.8;
         }
 
         /* ===== NAVBAR ===== */
