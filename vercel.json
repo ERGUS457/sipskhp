@@ -2,8 +2,13 @@
   "version": 2,
   "framework": null,
   "functions": {
-    "api/**/*.php": {
-      "runtime": "vercel-php@0.7.3"
+    "api/*.php": {
+      "runtime": "vercel-php@0.7.3",
+      "includeFiles": [
+        "application/**",
+        "system/**",
+        "index.php"
+      ]
     }
   },
   "routes": [
