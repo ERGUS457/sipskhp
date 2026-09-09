@@ -4,11 +4,7 @@
   "functions": {
     "api/*.php": {
       "runtime": "vercel-php@0.7.3",
-      "includeFiles": [
-        "application/**",
-        "system/**",
-        "index.php"
-      ]
+      "includeFiles": "{application/**,system/**,index.php}"
     }
   },
   "routes": [
